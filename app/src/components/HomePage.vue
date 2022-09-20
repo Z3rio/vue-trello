@@ -21,12 +21,13 @@
               elevation="2"
               color="#0065ff"
               class="home_signup-button"
+              href="http://localhost:8080/signup"
             >Sign up - it’s free </v-btn>
           </v-col>
         </v-row>
         <div class="home_watch-video mt-7 ml-4">
           <h1>Watch Video</h1>
-          <PlayCircleOutlineIcon size="28"/>
+          <PlayCircleOutlineIcon :size="28"/>
         </div>
       </v-col>
 

@@ -13,15 +13,19 @@
       <TabsList :tabs="tabs" />
 
       <div class="buttons">
-        <v-btn
-          class="login_button"
-          elevation="0"
-          color="#fff"
-        >Log In</v-btn>
-        <v-btn
-          color="#0065ff"
-          elevation="0"
-        >Get Trello for free</v-btn>
+        <a href="http://localhost:8080/login">
+          <v-btn
+            class="login_button"
+            elevation="0"
+            color="#fff"
+          >Log In</v-btn>
+        </a>
+        <a href="http://localhost:8080/signup">
+          <v-btn
+            color="#0065ff"
+            elevation="0"
+          >Get Trello for free</v-btn>
+        </a>
       </div>
     </v-app-bar>
 
@@ -86,7 +90,11 @@ body {
   font-family: 'Charlie Text', sans-serif;
   font-size: 1.2rem!important;
 
-  text-transform: none;
+  text-transform: none!important;
+}
+
+.buttons a {
+  text-decoration: none!important;
 }
 
 .buttons .login_button {
