@@ -1,32 +1,56 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
-  </div>
+  <v-app>
+    <v-app-bar
+      app
+      color="#fff"
+      dark
+    >
+      <!-- eslint-disable max-len -->
+      <a class="d-flex align-center text-decoration-none" href="http://localhost:8080" ref="Logo">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8c/Trello_logo.svg/1280px-Trello_logo.svg.png" alt="Logo">
+      </a>
+      <!-- eslint-enable max-len -->
+    </v-app-bar>
+
+    <v-main>
+      <router-view/>
+    </v-main>
+  </v-app>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+@font-face {
+  font-family: 'Charlie Display';
+  src: url('./fonts/CharlieDisplay-Regular.ttf');
 }
 
-nav {
-  padding: 30px;
+@font-face {
+  font-family: 'Charlie Display Bold';
+  src: url('./fonts/CharlieDisplay-Bold.ttf');
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+@font-face {
+  font-family: 'Charlie Display Semi Bold';
+  src: url('./fonts/CharlieDisplay-Semibold.ttf');
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+.v-app-bar div h1 {
+  color: #293856;
+}
+
+.v-app-bar a img {
+  height: 32px;
 }
 </style>
+
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
+  name: 'App',
+
+  data: () => ({
+    //
+  }),
+});
+</script>
