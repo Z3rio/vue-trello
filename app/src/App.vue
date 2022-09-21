@@ -68,6 +68,7 @@ body::-webkit-scrollbar {
 body {
   -ms-overflow-style: none;
   scrollbar-width: none;
+  color: rgb(9, 30, 66);
 }
 
 .v-app-bar div h1 {

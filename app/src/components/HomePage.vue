@@ -1,41 +1,75 @@
 <template>
-  <v-container fluid class="home-container">
-    <v-row class="inner">
-      <v-col cols="10" sm="6" md="7">
-        <h1 class="home-header">Trello helps teams move work forward.</h1>
-        <!-- eslint-disable max-len -->
-        <p class="home-description mt-2">Collaborate, manage projects, and reach new productivity peaks. From high rises to the home office, the way your team works is unique—accomplish it all with Trello.</p>
-        <!-- eslint-enable max-len -->
+  <div>
+    <v-container fluid class="home-container">
+      <v-row class="inner">
+        <v-col cols="10" sm="6" md="7">
+          <h1 class="home-header">Trello helps teams move work forward.</h1>
+          <!-- eslint-disable max-len -->
+          <p class="home-description mt-2">Collaborate, manage projects, and reach new productivity peaks. From high rises to the home office, the way your team works is unique—accomplish it all with Trello.</p>
+          <!-- eslint-enable max-len -->
 
-        <v-row class="mt-7">
-          <v-col cols="10" sm="6" md="8" >
-            <v-text-field
-              class="home_email-text-field"
-              placeholder="Email"
-              solo hide-details flat
-              background-color="#fff"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="6" md="4">
-            <v-btn
-              elevation="2"
-              color="#0065ff"
-              class="home_signup-button"
-              href="http://localhost:8080/signup"
-            >Sign up - it’s free </v-btn>
-          </v-col>
-        </v-row>
-        <div class="home_watch-video mt-7 ml-4">
-          <h1>Watch Video</h1>
-          <PlayCircleOutlineIcon :size="28"/>
-        </div>
-      </v-col>
+          <v-row class="mt-7">
+            <v-col cols="10" sm="6" md="8" >
+              <v-text-field
+                class="home_email-text-field"
+                placeholder="Email"
+                solo hide-details flat
+                background-color="#fff"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="6" md="4">
+              <v-btn
+                elevation="2"
+                color="#0065ff"
+                class="blue-button home-btn"
+                href="http://localhost:8080/signup"
+              >Sign up - it’s free </v-btn>
+            </v-col>
+          </v-row>
+          <div class="home_watch-video mt-7 ml-4">
+            <h1>Watch Video</h1>
+            <PlayCircleOutlineIcon :size="28"/>
+          </div>
+        </v-col>
 
-      <v-col cols="6" md="5">
-        <img class="home-main-image" src="https://images.ctfassets.net/rz1oowkt5gyp/5QIzYxue6b7raOnVFtMyQs/113acb8633ee8f0c9cb305d3a228823c/hero.png?w=1200&fm=webp" alt="Image">
-      </v-col>
-    </v-row>
-  </v-container>
+        <v-col cols="6" md="5">
+          <img class="home-main-image mt-n7" src="https://images.ctfassets.net/rz1oowkt5gyp/5QIzYxue6b7raOnVFtMyQs/113acb8633ee8f0c9cb305d3a228823c/hero.png?w=1200&fm=webp" alt="Image">
+        </v-col>
+      </v-row>
+    </v-container>
+    <v-container>
+      <div class="inner2 features">
+        <hr>
+        <FeatureList :features="features"/>
+        <hr>
+      </div>
+    </v-container>
+    <v-container class="inner2 second-section text-center">
+      <h1>It’s more than work. It’s a way of working together.</h1>
+      <!-- eslint-disable max-len -->
+      <p>Start with a Trello board, lists, and cards. Customize and expand with more features as your teamwork grows. Manage projects, organize tasks, and build team spirit—all in one place.</p>
+      <!-- eslint-enable max-len -->
+      <v-btn
+        class="blue-button thick"
+        elevation="2"
+        color="#0065ff"
+      >Start doing</v-btn>
+      <br>
+
+      <!-- eslint-disable max-len -->
+      <img class="mt-7 trello-board-img" src="https://images.ctfassets.net/rz1oowkt5gyp/7pYWhpQ3vnntxoShaImNws/777fabbf069416489167ab92027ce086/board.png?w=1200&fm=webp" alt="Illustration of a team Trello Board">
+
+      <p class="mt-3">Join over 2,000,000 teams worldwide that are using Trello to get more done.</p>
+      <!-- eslint-enable max-len -->
+      <div class="companies">
+        <img v-for="(value, index) in companies" :key="index" :src="value" alt="Company Image">
+      </div>
+
+      <ExtraFeatureList :features="extra_features" @onLearnMoreClick="(index) => {
+        this.extra_features[index].isOpened = !this.extra_features[index].isOpened;
+      }" />
+    </v-container>
+  </div>
 </template>
 
 <style>
@@ -43,8 +77,24 @@
   background: linear-gradient(rgb(234, 230, 255), rgb(255, 255, 255)) no-repeat;
 }
 
-.inner {
-  margin: 7.5vh auto;
+.row.inner {
+  margin: 7.5vh auto 0 auto;
+}
+
+hr {
+  width: 100%;
+  height: 1px;
+  border: none;
+  background: #c1c1c1;
+}
+
+.inner2.features {
+  margin: 3.5vh auto 0 auto;
+}
+
+.inner2.second-section {
+  padding: 3rem 1rem 1rem;
+  margin: 0 auto;
 }
 
 .home-header {
@@ -73,7 +123,7 @@
   width: 87.5%;
 }
 
-.home_signup-button {
+.blue-button {
   color: white!important;
 
   font-size: 1rem;
@@ -81,12 +131,18 @@
   font-weight: 500;
   text-transform: none!important;
 
-  height: 100%!important;
-
   transition: 250ms;
 }
 
-.home_signup-button:hover {
+.blue-button.thick {
+  height: 48px!important;
+}
+
+.blue-button.home-btn {
+  height: 100%!important;
+}
+
+.blue-button:hover {
   background: rgb(7, 71, 166)!important;
   transition: 400ms;
 }
@@ -112,26 +168,59 @@
   color: rgb(0, 82, 204);
 }
 
+.second-section h1 {
+  font-family: 'Charlie Display', sans-serif;
+  font-size: 2.25rem;
+  margin: 0 0 8px;
+}
+
+.second-section p {
+  font-family: 'Charlie Text', sans-serif;
+  font-size: 20px;
+  margin: 0 0 24px;
+}
+
+.second-section .trello-board-img {
+  width: 100%;
+  padding: 0 calc(1rem + 72px) 0 calc(1rem + 72px);
+}
+
+.companies {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 1rem;
+  width: calc(162px * 4 + 2rem);
+  margin: 0 auto;
+}
+
+.companies img {
+  height: 80px;
+  width: 162px;
+  padding: 0 1rem 1rem;
+}
+
 @media (min-width: 576px) {
-  .inner {
+  .inner, .inner2 {
     max-width: 540px;
   }
 }
 
 @media (min-width: 768px) {
-  .inner {
+  .inner, .inner2 {
     max-width: 720px;
   }
 }
 
 @media (min-width: 992px) {
-  .inner {
+  .inner, .inner2 {
     max-width: 960px;
   }
 }
 
 @media (min-width: 1200px) {
-  .inner {
+  .inner, .inner2 {
     max-width: 1140px;
   }
 }
@@ -140,63 +229,101 @@
 <script lang="ts">
 import Vue from 'vue';
 import PlayCircleOutlineIcon from 'vue-material-design-icons/PlayCircleOutline.vue';
+import FeatureList from './FeatureList.vue';
+import ExtraFeatureList from './ExtraFeatureList.vue';
 
 export default Vue.extend({
   name: 'HomePage',
 
   components: {
     PlayCircleOutlineIcon,
+    FeatureList,
+    ExtraFeatureList,
   },
 
   data: () => ({
-    ecosystem: [
+    features: [
       {
-        text: 'vuetify-loader',
-        href: 'https://github.com/vuetifyjs/vuetify-loader',
+        header: 'See Trello pricing',
+        description: 'Whether you’re a team of 2 or 2,000, Trello can be customized for your organization. Explore which option is best for you.',
+        buttonText: 'Compare pricing',
+        imageUrl: 'https://images.ctfassets.net/rz1oowkt5gyp/2ozLp25HsHeANpiNqAwzGI/d60a017d2f214c28f774b35d03499782/tag.svg',
       },
       {
-        text: 'github',
-        href: 'https://github.com/vuetifyjs/vuetify',
+        header: 'What is Trello?',
+        description: 'Trello is the visual tool that empowers your team to manage any type of project, workflow, or task tracking.',
+        buttonText: 'Tour Trello',
+        imageUrl: 'https://images.ctfassets.net/rz1oowkt5gyp/6rRWTcHzPKupQ3ZDqBaxu6/aecd045f4b31a92288a85bdb4a9dfe2c/compass.svg ',
       },
       {
-        text: 'awesome-vuetify',
-        href: 'https://github.com/vuetifyjs/awesome-vuetify',
-      },
-    ],
-    importantLinks: [
-      {
-        text: 'Documentation',
-        href: 'https://vuetifyjs.com',
-      },
-      {
-        text: 'Chat',
-        href: 'https://community.vuetifyjs.com',
-      },
-      {
-        text: 'Made with Vuetify',
-        href: 'https://madewithvuejs.com/vuetify',
-      },
-      {
-        text: 'Twitter',
-        href: 'https://twitter.com/vuetifyjs',
-      },
-      {
-        text: 'Articles',
-        href: 'https://medium.com/vuetify',
+        header: 'Discover Trello Enterprise',
+        description: 'The productivity tool teams love, paired with the features and security needed for scale.',
+        buttonText: 'Learn more',
+        imageUrl: 'https://images.ctfassets.net/rz1oowkt5gyp/5AE4nXLOennRxmmUMcgMLM/747e96bdd16cf4113e4ef867bd85fd29/solutions.svg',
       },
     ],
-    whatsNext: [
+    companies: [
+      'https://images.ctfassets.net/rz1oowkt5gyp/7nR3kQlx8IP5mfCCBTatsy/0b3952a6be3ebb10116d62aa93be7bbb/coinbase.svg',
+      'https://images.ctfassets.net/rz1oowkt5gyp/6VwRn7PI4zrZo84Uoa8rnt/b0ae3da34916a3ff02d26e2120efe9b8/johnDeere.svg',
+      'https://images.ctfassets.net/rz1oowkt5gyp/5KdQPApAFJpLMv9AntiNLk/530cef2a4b56ad758c1e91fad5c3e7ac/Grand-Hyatt.svg',
+      'https://images.ctfassets.net/rz1oowkt5gyp/2zdwHAyV1sdTRtu3VZWrnp/cdabf13fb68d433667812689add7cdc8/Google.svg',
+      'https://images.ctfassets.net/rz1oowkt5gyp/1zdBcYqeqkDsLUfggfKFRO/a732e0001ca5153ef7195eea63ff6a3b/Visa.svg',
+      'https://images.ctfassets.net/rz1oowkt5gyp/2Im844Kon73pvCD2ljoxeL/4073e041eb8eb961a0f9505965dec09b/Zoom.png?w=576',
+    ],
+    extra_features: [
       {
-        text: 'Explore components',
-        href: 'https://vuetifyjs.com/components/api-explorer',
+        header: 'Features to help your team succeed',
+        description: 'Powering a productive team means using a powerful tool (and plenty of snacks). From meetings and projects to events and goal setting, Trello’s intuitive features give any team the ability to quickly set up and customize workflows for just about anything.',
+        align: 'left',
+        hideLearnMore: true,
       },
       {
-        text: 'Select a layout',
-        href: 'https://vuetifyjs.com/getting-started/pre-made-layouts',
+        upperHeader: 'CHOOSE A VIEW',
+        header: 'The board is just the beginning',
+        description: 'Lists and cards are the building blocks of organizing work on a Trello board. Grow from there with task assignments, timelines, productivity metrics, calendars, and more.',
+        align: 'right',
+        image: {
+          url: 'https://images.ctfassets.net/rz1oowkt5gyp/4gcdup5C0Z1rQEQDGfeWth/71156837ac2d75293bf0eec8010aeb6e/view.svg',
+          width: 415,
+          height: 313,
+        },
+        isOpened: false,
       },
       {
-        text: 'Frequently Asked Questions',
-        href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
+        upperHeader: 'DIVE INTO THE DETAILS',
+        header: 'Cards contain everything you need',
+        description: 'Trello cards are your portal to more organized work—where every single part of your task can be managed, tracked, and shared with teammates. Open any card to uncover an ecosystem of checklists, due dates, attachments, conversations, and more.',
+        align: 'left',
+        image: {
+          url: 'https://images.ctfassets.net/rz1oowkt5gyp/4B1RPRoUspHQXgYCRAndBX/466053fb07ff2cdc0ae06649d5f30d8f/card-back.svg',
+          width: 339,
+          height: 275,
+        },
+        isOpened: false,
+      },
+      {
+        upperHeader: 'MEET YOUR NEW BUTLER',
+        header: 'No-code automation',
+        description: 'Let the robots do the work—so your team can focus on work that matters. With Trello’s built-in automation, Butler, reduce the number of tedious tasks (and clicks) on your project board by harnessing the power of automation across your entire team.',
+        align: 'right',
+        image: {
+          url: 'https://images.ctfassets.net/rz1oowkt5gyp/1zR830Rgv5hpZbwuiyAFkq/326d72f720d090342f0744a8deb8b727/automation.png?w=576',
+          width: 489.5,
+          height: 370,
+        },
+        isOpened: false,
+      },
+      {
+        upperHeader: 'POWER-UPS',
+        header: 'Integrate top work tools',
+        description: 'Easily connect the apps your team already uses into your Trello workflow, or add a Power-Up that helps fine-tune one specific need. With hundreds of Power-Ups available, your team’s workflow wishes are covered.',
+        align: 'left',
+        image: {
+          url: 'https://images.ctfassets.net/rz1oowkt5gyp/17AXIwjhGkuPEpvcWzwoIJ/e6e767d503809a89be375846ac81bbef/power-ups.png?w=576',
+          width: 376.5,
+          height: 339,
+        },
+        isOpened: false,
       },
     ],
   }),

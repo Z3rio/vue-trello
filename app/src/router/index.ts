@@ -13,6 +13,11 @@ const routes2: Array<RouteConfig> = [
     component: HomeView,
   },
   {
+    path: '/home',
+    name: 'home2',
+    component: HomeView,
+  },
+  {
     path: '/login',
     name: 'login',
     component: LoginView,
