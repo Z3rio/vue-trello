@@ -63,7 +63,3 @@ export default Vue.extend({
   name: 'FeatureItem',
 });
 </script>
-
-<style scoped>
-
-</style>

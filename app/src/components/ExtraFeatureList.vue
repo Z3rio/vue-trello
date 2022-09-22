@@ -2,7 +2,7 @@
   <div class="extra-feature-list">
     <ExtraFeatureItem
       v-for="(feature, index) in features" :key="index" :data="feature"
-      @onLearnMoreClick="this.$parent.onLearnMoreClick(index)"/>
+      @onLearnMoreClick="$emit('onLearnMoreClick', index)"/>
   </div>
 </template>
 
@@ -26,7 +26,3 @@ export default Vue.extend({
   },
 });
 </script>
-
-<style scoped>
-
-</style>

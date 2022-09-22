@@ -69,6 +69,7 @@
         this.extra_features[index].isOpened = !this.extra_features[index].isOpened;
       }" />
     </v-container>
+    <ClientTestimonials :testimonials="testimonials" />
   </div>
 </template>
 
@@ -231,6 +232,7 @@ import Vue from 'vue';
 import PlayCircleOutlineIcon from 'vue-material-design-icons/PlayCircleOutline.vue';
 import FeatureList from './FeatureList.vue';
 import ExtraFeatureList from './ExtraFeatureList.vue';
+import ClientTestimonials from './ClientTestimonials.vue';
 
 export default Vue.extend({
   name: 'HomePage',
@@ -239,6 +241,7 @@ export default Vue.extend({
     PlayCircleOutlineIcon,
     FeatureList,
     ExtraFeatureList,
+    ClientTestimonials,
   },
 
   data: () => ({
@@ -288,6 +291,16 @@ export default Vue.extend({
           height: 313,
         },
         isOpened: false,
+        learnMore: {
+          text: 'You and your team can start up a Trello board in seconds. With the ability to view board data from many different angles, the entire team stays up-to-date in the way that suits them best:',
+          list: [
+            'Use a Timeline view for project planning',
+            'Calendar helps with time management',
+            'Table view connects work across boards',
+            'See board stats with Dashboard, and more!',
+          ],
+          linkText: 'Learn more about views',
+        },
       },
       {
         upperHeader: 'DIVE INTO THE DETAILS',
@@ -300,6 +313,16 @@ export default Vue.extend({
           height: 275,
         },
         isOpened: false,
+        learnMore: {
+          text: 'Spin up a Trello card with a click, then uncover everything it can hold. Break down bigger card tasks into steps with file attachment previews, reminders, checklists and comments—emoji reactions included! Plus, gain powerful perspective by seeing all cards by list and status at the board level.',
+          text2: 'Your team can:',
+          list: [
+            'Manage deadlines',
+            'Provide and track feedback',
+            'Assign tasks and hand off work',
+            'Connect work across apps',
+          ],
+        },
       },
       {
         upperHeader: 'MEET YOUR NEW BUTLER',
@@ -312,6 +335,16 @@ export default Vue.extend({
           height: 370,
         },
         isOpened: false,
+        learnMore: {
+          text: 'Butler uses natural language commands to automate just about any task in Trello:',
+          list: [
+            'Automate common actions like moving lists',
+            'Create custom buttons to build process quickly',
+            'Surface upcoming deadlines to the team',
+            'Schedule teammate assignments, and more!\n',
+          ],
+          linkText: 'Learn more about Butler Automation',
+        },
       },
       {
         upperHeader: 'POWER-UPS',
@@ -324,6 +357,72 @@ export default Vue.extend({
           height: 339,
         },
         isOpened: false,
+        learnMore: {
+          text: 'From Reporting to Custom Fields to your beloved software integrations—we’ve got functionalities, your favorites, and more!',
+          text2: 'Such as:',
+          list: [
+            'Confluence',
+            'Slack',
+            'Dropbox',
+            'Google Drive',
+            'Evernote',
+          ],
+          linkText: 'Learn more about views',
+        },
+      },
+    ],
+    testimonials: [
+      {
+        quote: 'Everyone loves it; it has democratized our finance function. In some ways Trello shattered hierarchy and brought us together.',
+        person: {
+          name: 'BHARATH SUNDAR',
+          jobTitle: 'Finance, eBay',
+        },
+        industry: 'eCommerce',
+        logo: {
+          url: 'https://images.ctfassets.net/rz1oowkt5gyp/6fuM8z1xpeF4hbcwea2bVV/9307ee47c45122c399c33b7536024bd6/ebay.svg',
+          height: 120,
+          width: 300,
+        },
+      },
+      {
+        quote: 'Very simple to use, great automation and keeps me on track with all I need to do. I also like that it can be shared with others.',
+        person: {
+          name: 'KERRY PARKER-EVANS',
+          jobTitle: 'IT Project Manager, Egencia',
+        },
+        industry: 'Travel',
+        logo: {
+          url: 'https://images.ctfassets.net/rz1oowkt5gyp/II3Kz8QYmBOB2hZw2OpWa/019c22804631400fc7ed850908c5829c/egencia.svg',
+          height: 38,
+          width: 300,
+        },
+      },
+      {
+        quote: 'Trello makes it easy to keep everyone on the same page. As changes happen, the real-time updates with email notifications have been key.',
+        person: {
+          name: 'HAYDON DOTSON',
+          jobTitle: 'Sales Manager, Detroit Red Wings',
+        },
+        industry: 'Sport',
+        logo: {
+          url: 'https://images.ctfassets.net/rz1oowkt5gyp/7lYMIrJ4C3qzbliMFrounD/42b0bd6e2a60c2685289b2fdb161f208/detroit-red-wings.svg',
+          height: 186,
+          width: 280,
+        },
+      },
+      {
+        quote: 'Now that we\'ve switched to a remote environment, with the use of Trello, we can now limit the number of meetings we have regarding specific projects and turn to Trello for updates instead.',
+        person: {
+          name: 'HALEY ENNES',
+          jobTitle: 'HR Manager, Sprout Social',
+        },
+        industry: 'Marketing',
+        logo: {
+          url: 'https://images.ctfassets.net/rz1oowkt5gyp/7nXolb9JdcJnMUUnrq4HGO/79745cbc1df4920d6596db73d065897a/sprout-social.svg',
+          height: 179,
+          width: 260,
+        },
       },
     ],
   }),

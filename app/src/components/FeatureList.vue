@@ -26,7 +26,3 @@ export default Vue.extend({
   name: 'FeatureList',
 });
 </script>
-
-<style scoped>
-
-</style>

@@ -26,7 +26,3 @@ export default Vue.extend({
   name: 'TabsList',
 });
 </script>
-
-<style scoped>
-
-</style>
