@@ -32,6 +32,8 @@
     <v-main>
       <router-view/>
     </v-main>
+
+    <PageFooter />
   </v-app>
 </template>
 
@@ -116,12 +118,14 @@ body {
 <script lang="ts">
 import Vue from 'vue';
 import TabsList from './components/TabsList.vue';
+import PageFooter from './components/PageFooter.vue';
 
 export default Vue.extend({
   name: 'App',
 
   components: {
     TabsList,
+    PageFooter,
   },
 
   data: () => ({

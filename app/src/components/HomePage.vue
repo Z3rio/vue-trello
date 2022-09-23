@@ -70,6 +70,30 @@
       }" />
     </v-container>
     <ClientTestimonials :testimonials="testimonials" />
+    <div class="inner2 third-section">
+      <p>Sign up and get started with Trello today. A world of productive teamwork awaits!</p>
+
+      <div class="bottom">
+        <v-text-field
+          class="home_email-text-field"
+          placeholder="Email"
+          solo hide-details flat
+          background-color="#fff"
+        ></v-text-field>
+        <v-btn
+          elevation="2"
+          color="#fff"
+          class="grey-button thick"
+        >Sign up</v-btn>
+      </div>
+    </div>
+    <div class="app-section">
+      <div class="inner2">
+        <p>Trello also works great on your smaller screen.</p>
+        <img src="https://images.ctfassets.net/rz1oowkt5gyp/1A08O96pP0xMdLEGWQsqFl/1bdabd473356ca3f47b6f2bc1c4dd710/app-store.svg" alt="Download on app store" width="217" height="64">
+        <img src="https://images.ctfassets.net/rz1oowkt5gyp/ySXuMiOD6CoFYE7olrufg/612dce982aca4bbe1218b703f8541544/play-store.svg" alt="Download on play store" width="217" height="64">
+      </div>
+    </div>
   </div>
 </template>
 
@@ -135,7 +159,18 @@ hr {
   transition: 250ms;
 }
 
-.blue-button.thick {
+.grey-button {
+  color: #172b4d!important;
+
+  font-size: 1rem;
+  font-family: "Charlie Display Semi Bold", sans-serif;
+  font-weight: 500;
+  text-transform: none!important;
+
+  transition: 250ms;
+}
+
+button.thick {
   height: 48px!important;
 }
 
@@ -200,6 +235,83 @@ hr {
   height: 80px;
   width: 162px;
   padding: 0 1rem 1rem;
+}
+
+.inner2.third-section {
+  background: linear-gradient(rgb(64, 50, 148), rgb(76, 154, 255)) no-repeat;
+
+  border-radius: 0.5rem;
+
+  padding: 1.5rem 3rem;
+  color: white;
+
+  display: grid;
+  gap: 3rem;
+
+  margin: -5rem auto 5rem auto;
+}
+
+.inner2.third-section p {
+  font-family: 'Charlie Text', sans-serif;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.inner2.third-section .bottom {
+  display: flex;
+  justify-content: center;
+}
+
+.inner2.third-section .v-input {
+  margin-right: 1rem;
+}
+.v-input__slot {
+  width: 376px;
+}
+
+.v-input {
+  flex: 0 0 auto!important;
+}
+
+.app-section {
+  background: rgb(250, 251, 252);
+  color: rgb(9, 30, 66);
+
+  width: 100%;
+
+  border-radius: 0.5rem;
+
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.app-section .inner2 {
+  margin: 0 auto;
+
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.app-section p {
+  margin: 0;
+
+  font-size: 20px;
+  font-family: 'Charlie Text', sans-serif;
+
+  width: 66.6667%;
+
+  text-align: right;
+}
+
+.app-section p,
+.app-section img {
+  padding: 1rem;
+}
+
+.app-section img {
+  max-width: 100%;
+  height: auto;
 }
 
 @media (min-width: 576px) {
