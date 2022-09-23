@@ -3,6 +3,7 @@ import VueRouter, { RouteConfig } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import SignUpView from '../views/SignUpView.vue';
 import LoginView from '../views/LoginView.vue';
+import NotFoundView from '../views/NotFoundView.vue';
 
 Vue.use(VueRouter);
 
@@ -26,6 +27,11 @@ const routes2: Array<RouteConfig> = [
     path: '/signup',
     name: 'signup',
     component: SignUpView,
+  },
+  {
+    path: '*',
+    name: '404',
+    component: NotFoundView,
   },
 ];
 
