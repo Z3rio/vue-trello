@@ -1,9 +1,11 @@
 <template>
-  <v-app>
+  <v-app :style="{background: $route.fullPath == '/login' || $route.fullPath == '/signup' ?
+  '#f9fafc' : '#fff'}">
     <v-app-bar
       app
       color="#fff"
       dark
+      v-if="$route.fullPath !== '/login' && $route.fullPath !== '/signup'"
     >
       <!-- eslint-disable max-len -->
       <a class="d-flex align-center text-decoration-none" href="http://localhost:8080" ref="Logo">
@@ -33,7 +35,8 @@
       <router-view/>
     </v-main>
 
-    <PageFooter />
+    <PageFooter v-if="$route.fullPath !== '/login' && $route.fullPath !== '/signup'" />
+    <PageFooter2 v-if="$route.fullPath == '/login' || $route.fullPath == '/signup'" />
   </v-app>
 </template>
 
@@ -119,6 +122,7 @@ body {
 import Vue from 'vue';
 import TabsList from './components/TabsList.vue';
 import PageFooter from './components/PageFooter.vue';
+import PageFooter2 from './components/PageFooter2.vue';
 
 export default Vue.extend({
   name: 'App',
@@ -126,6 +130,7 @@ export default Vue.extend({
   components: {
     TabsList,
     PageFooter,
+    PageFooter2,
   },
 
   data: () => ({

@@ -242,7 +242,7 @@ button.thick {
 
   border-radius: 0.5rem;
 
-  padding: 1.5rem 3rem;
+  padding: 1.5rem 3rem 2rem 3rem;
   color: white;
 
   display: grid;
