@@ -172,6 +172,11 @@
   gap: 10px;
 }
 
+.signup-form .social-logins button:hover {
+  background-color: #f9fafc;
+  transition: 200ms;
+}
+
 .btn-icon.google-icon {
   background: url('https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/8215f6659adc202403198fef903a447e/sign-in-with-google.svg') 0 50% no-repeat;
 }
