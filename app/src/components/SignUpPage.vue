@@ -53,7 +53,7 @@
         </v-btn>
       </div>
       <div class="bottom-help">
-        <a>Already have an account?</a>
+        <a href="http://localhost:8080/login">Already have an account? Log in</a>
       </div>
     </div>
   </div>
@@ -234,10 +234,11 @@
   font-family: '-apple-system',BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
   font-size: 14px;
   font-weight: 300;
+  text-decoration: none;
 }
 
-.signup-form .bottom-help a:last-child::before,
-.signup-container .bottom-help a:last-child::before {
+.signup-form .bottom-help a:last-child:not(:first-child)::before,
+.signup-container .bottom-help a:last-child:not(:first-child)::before {
   content: '\2022';
   margin: 0 8px 0px 4px;
   color: black;
