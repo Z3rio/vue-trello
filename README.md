@@ -1,4 +1,4 @@
-# TrelloClone
+![Logo](https://user-images.githubusercontent.com/54480523/192051819-588aa5f9-a5b7-4b31-a6b9-1001bb4b5041.png)
 This is just a clone of trello that I have started working on.<br>
 I plan to have it up an running in around a week of work although it wont be fully finished in that time frame.
 
