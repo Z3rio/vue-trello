@@ -5,6 +5,10 @@
       alt="Trello Logo">
 
     <div class="signup-form">
+      <div class="error-message" v-if="signupError !== ''">
+        {{signupError}}
+      </div>
+
       <h1>Sign up for your account</h1>
 
       <v-text-field
@@ -13,6 +17,13 @@
         outlined hide-details
         v-model="email"
       ></v-text-field>
+      <v-text-field
+        label="Enter password"
+        type="password"
+        outlined hide-details
+        v-model="password"
+        v-if="continued"
+      ></v-text-field>
 
       <p class="tos">By signing up, you confirm that you've read and accepted our
         Terms of Service and Privacy Policy.</p>
@@ -20,38 +31,48 @@
       <v-btn
         elevation="0" v-ripple="false" plain
         :disabled="email=='' || validate(email) == false"
+        @click="()=> {
+          if (continued) {
+            signup()
+          } else if (validate(email)) {
+            continued = true;
+          }
+        }"
       >
         Continue
       </v-btn>
 
-      <p class="or">OR</p>
+      <div  v-if="email == ''">
+        <p class="or">OR</p>
 
-      <div v-if="email == ''" class="social-signups">
-        <v-btn
-          elevation="2" v-ripple="false" plain
-        >
-          <div class="btn-icon google-icon"></div>
-          Continue with Google
-        </v-btn>
-        <v-btn
-          elevation="2" v-ripple="false" plain
-        >
-          <div class="btn-icon microsoft-icon"></div>
-          Continue with Microsoft
-        </v-btn>
-        <v-btn
-          elevation="2" v-ripple="false" plain
-        >
-          <div class="btn-icon apple-icon"></div>
-          Continue with Apple
-        </v-btn>
-        <v-btn
-          elevation="2" v-ripple="false" plain
-        >
-          <div class="btn-icon slack-icon"></div>
-          Continue with Slack
-        </v-btn>
+        <div class="social-signups">
+          <v-btn
+            elevation="2" v-ripple="false" plain
+          >
+            <div class="btn-icon google-icon"></div>
+            Continue with Google
+          </v-btn>
+          <v-btn
+            elevation="2" v-ripple="false" plain
+          >
+            <div class="btn-icon microsoft-icon"></div>
+            Continue with Microsoft
+          </v-btn>
+          <v-btn
+            elevation="2" v-ripple="false" plain
+          >
+            <div class="btn-icon apple-icon"></div>
+            Continue with Apple
+          </v-btn>
+          <v-btn
+            elevation="2" v-ripple="false" plain
+          >
+            <div class="btn-icon slack-icon"></div>
+            Continue with Slack
+          </v-btn>
+        </div>
       </div>
+
       <div class="bottom-help">
         <a href="http://localhost:8080/login">Already have an account? Log in</a>
       </div>
@@ -243,22 +264,58 @@
   margin: 0 8px 0px 4px;
   color: black;
 }
+
+.error-message {
+  background: #eb5a46;
+  border-radius: 4px;
+
+  padding: 0.5em 1em;
+
+  color: #fbedeb;
+  font-size: 14px;
+  font-family: '-apple-system',BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+}
 </style>
 <!-- eslint-enable max-len -->
 
 <script>
 import Vue from 'vue';
+import firebase from 'firebase';
 
 export default Vue.extend({
   name: 'SignUpPage',
 
   data: () => ({
     email: '',
+    password: '',
+
+    continued: false,
+
+    signupError: '',
   }),
 
   methods: {
     validate(email) {
       return /^(([^<>()\\[\]\\.,;:\s@\\"]+(\.[^<>()\\[\]\\.,;:\s@\\"]+)*)|(\\".+\\"))@(([^<>()\\.,;\s@\\"]+\.{0,1})+([^<>()\\.,;:\s@\\"]{2,}|[\d\\.]+))$/.test(email);
+    },
+
+    async signup() {
+      if (this.validate(this.email)) {
+        firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
+          (res) => {
+            this.signupError = '';
+            res.user
+              .updateProfile({
+                displayName: this.email.split('@')[0],
+              })
+              .then(() => {
+                this.$router.push('/login');
+              });
+          },
+        ).catch((err) => {
+          this.signupError = err.message;
+        });
+      }
     },
   },
 });

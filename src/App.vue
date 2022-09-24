@@ -5,7 +5,7 @@
       app
       color="#fff"
       dark
-      v-if="$route.fullPath !== '/login' && $route.fullPath !== '/signup'"
+      v-if="$route.name !== 'login' && $route.name !== 'signup' && $route.name !== 'dashboard'"
     >
       <!-- eslint-disable max-len -->
       <a class="d-flex align-center text-decoration-none" href="http://localhost:8080" ref="Logo">
@@ -35,7 +35,7 @@
       <router-view/>
     </v-main>
 
-    <PageFooter v-if="$route.fullPath !== '/login' && $route.fullPath !== '/signup'" />
+    <PageFooter v-if="$route.fullPath == '/home'" />
     <PageFooter2 v-if="$route.fullPath == '/login' || $route.fullPath == '/signup'" />
   </v-app>
 </template>
@@ -120,6 +120,7 @@ body {
 
 <script lang="ts">
 import Vue from 'vue';
+import firebase from 'firebase';
 import TabsList from './components/TabsList.vue';
 import PageFooter from './components/PageFooter.vue';
 import PageFooter2 from './components/PageFooter2.vue';
@@ -131,6 +132,17 @@ export default Vue.extend({
     TabsList,
     PageFooter,
     PageFooter2,
+  },
+
+  created() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        const path = this.$route.name;
+        if (path === 'home' || path === 'login' || path === 'signup') {
+          this.$router.push('/dashboard');
+        }
+      }
+    });
   },
 
   data: () => ({

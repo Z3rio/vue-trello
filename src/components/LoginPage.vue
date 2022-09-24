@@ -5,47 +5,70 @@
       alt="Trello Logo">
 
     <div class="login-form">
+      <div class="error-message" v-if="loginError !== ''">
+        {{loginError}}
+      </div>
+
       <h1>Log in to Trello</h1>
 
       <v-text-field
         label="Enter email"
         type="email"
         outlined hide-details
+        v-model="email"
+      ></v-text-field>
+      <v-text-field
+        label="Enter password"
+        type="password"
+        outlined hide-details
+        v-model="password"
+        v-if="continued"
       ></v-text-field>
       <v-btn
         elevation="0" v-ripple="false" plain
+        :disabled="email=='' || validate(email) == false"
+        @click="() => {
+          if (continued) {
+            login();
+          } else if (validate(email)) {
+            continued = true;
+          }
+        }"
       >
         Continue
       </v-btn>
 
-      <p class="or">OR</p>
+      <div v-if="email == ''">
+        <p class="or">OR</p>
 
-      <div class="social-logins">
-        <v-btn
-          elevation="2" v-ripple="false" plain
-        >
-          <div class="btn-icon google-icon"></div>
-          Continue with Google
-        </v-btn>
-        <v-btn
-          elevation="2" v-ripple="false" plain
-        >
-          <div class="btn-icon microsoft-icon"></div>
-          Continue with Microsoft
-        </v-btn>
-        <v-btn
-          elevation="2" v-ripple="false" plain
-        >
-          <div class="btn-icon apple-icon"></div>
-          Continue with Apple
-        </v-btn>
-        <v-btn
-          elevation="2" v-ripple="false" plain
-        >
-          <div class="btn-icon slack-icon"></div>
-          Continue with Slack
-        </v-btn>
+        <div class="social-logins">
+          <v-btn
+            elevation="2" v-ripple="false" plain
+          >
+            <div class="btn-icon google-icon"></div>
+            Continue with Google
+          </v-btn>
+          <v-btn
+            elevation="2" v-ripple="false" plain
+          >
+            <div class="btn-icon microsoft-icon"></div>
+            Continue with Microsoft
+          </v-btn>
+          <v-btn
+            elevation="2" v-ripple="false" plain
+          >
+            <div class="btn-icon apple-icon"></div>
+            Continue with Apple
+          </v-btn>
+          <v-btn
+            elevation="2" v-ripple="false" plain
+          >
+            <div class="btn-icon slack-icon"></div>
+            Continue with Slack
+          </v-btn>
+        </div>
       </div>
+
       <div class="bottom-help">
         <a>Can't log in?</a>
         <a>Sign up for an account</a>
@@ -120,6 +143,23 @@
 .login-form .v-input__control > .v-input__slot {
   height: 50px!important;
   min-height: 0px!important;
+}
+
+.login-form>button:not(.v-btn--disabled) {
+  background: #5AAC44;
+}
+
+.login-form>button.v-btn--disabled {
+  background: #E2E4E6;
+}
+
+.login-form>button:not(.v-btn--disabled) .v-btn__content {
+  color: white;
+}
+
+.login-form>button.v-btn--disabled .v-btn__content {
+  color: #8c8c8c;
+  font-weight: bold!important;
 }
 
 .login-form .v-text-field--outlined > .v-input__control > .v-input__slot {
@@ -222,13 +262,52 @@
   margin: 0 8px 0px 4px;
   color: black;
 }
+
+.error-message {
+  background: #eb5a46;
+  border-radius: 4px;
+
+  padding: 0.5em 1em;
+
+  color: #fbedeb;
+  font-size: 14px;
+  font-family: '-apple-system',BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+}
 </style>
 <!-- eslint-enable max-len -->
 
 <script>
 import Vue from 'vue';
+import firebase from 'firebase';
 
 export default Vue.extend({
   name: 'LoginPage',
+
+  data: () => ({
+    email: '',
+    password: '',
+
+    continued: false,
+
+    loginError: '',
+  }),
+
+  methods: {
+    validate(email) {
+      return /^(([^<>()\\[\]\\.,;:\s@\\"]+(\.[^<>()\\[\]\\.,;:\s@\\"]+)*)|(\\".+\\"))@(([^<>()\\.,;\s@\\"]+\.{0,1})+([^<>()\\.,;:\s@\\"]{2,}|[\d\\.]+))$/.test(email);
+    },
+
+    login() {
+      if (this.validate(this.email) && this.password !== '') {
+        firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
+          (user) => {
+            this.$router.push('/dashboard');
+          },
+        ).catch((err) => {
+          this.loginError = err.message;
+        });
+      }
+    },
+  },
 });
 </script>
