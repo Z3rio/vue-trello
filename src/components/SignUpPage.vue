@@ -19,7 +19,7 @@
 
       <v-btn
         elevation="0" v-ripple="false" plain
-        :disabled="email==''"
+        :disabled="email=='' || validate(email) == false"
       >
         Continue
       </v-btn>
@@ -255,5 +255,11 @@ export default Vue.extend({
   data: () => ({
     email: '',
   }),
+
+  methods: {
+    validate(email) {
+      return /^(([^<>()\\[\]\\.,;:\s@\\"]+(\.[^<>()\\[\]\\.,;:\s@\\"]+)*)|(\\".+\\"))@(([^<>()\\.,;\s@\\"]+\.{0,1})+([^<>()\\.,;:\s@\\"]{2,}|[\d\\.]+))$/.test(email);
+    },
+  },
 });
 </script>
