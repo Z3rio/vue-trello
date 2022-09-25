@@ -1,5 +1,5 @@
 <template>
-  <DashboardPage />
+  <DashboardPage :user="user"/>
 </template>
 
 <script lang="ts">
@@ -8,6 +8,10 @@ import DashboardPage from '../components/DashboardPage.vue';
 
 export default Vue.extend({
   name: 'DashboardView',
+
+  props: {
+    user: Object,
+  },
 
   components: {
     DashboardPage,

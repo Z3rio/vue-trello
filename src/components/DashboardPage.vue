@@ -1,5 +1,10 @@
+<script src="../router/index.ts"></script>
 <template>
-  <h1>dashboard</h1>
+  <div>
+    <v-btn @click="logOut">logout</v-btn>
+    <h1>dashboard</h1>
+  </div>
+
 </template>
 
 <style>
@@ -25,6 +30,16 @@ export default Vue.extend({
         this.$router.push('/home');
       }
     });
+  },
+
+  methods: {
+    logOut() {
+      firebase.auth().signOut().then(() => {
+        firebase.auth().onAuthStateChanged(() => {
+          this.$router.push('/home');
+        })
+      })
+    },
   },
 });
 </script>

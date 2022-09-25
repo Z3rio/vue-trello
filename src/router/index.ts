@@ -12,31 +12,54 @@ const routes2: Array<RouteConfig> = [
   {
     path: '/',
     name: 'home',
+    meta: {
+      footer: 1,
+      topnav: 1,
+    },
     component: HomeView,
   },
   {
     path: '/home',
     name: 'home2',
+    meta: {
+      footer: 1,
+      topnav: 1,
+    },
     component: HomeView,
   },
   {
     path: '/login',
     name: 'login',
+    meta: {
+      footer: 2,
+      background: '#f9fafc',
+    },
     component: LoginView,
   },
   {
     path: '/signup',
     name: 'signup',
+    meta: {
+      footer: 2,
+      background: '#f9fafc',
+    },
     component: SignUpView,
   },
   {
     path: '/dashboard',
     name: 'dashboard',
+    meta: {
+      topnav: 2,
+    },
     component: DashboardView,
   },
   {
     path: '*',
     name: '404',
+    meta: {
+      footer: 1,
+      topnav: 1,
+    },
     component: NotFoundView,
   },
 ];

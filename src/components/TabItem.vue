@@ -6,14 +6,14 @@
 </template>
 
 <style>
-.tab-text,
-.tab-icon {
+.app-bar-1 .tab-text,
+.app-bar-1 .tab-icon {
   color: rgb(23, 43, 77);
   margin-bottom: 0!important;
 }
 
-.tab-item:hover .tab-text,
-.tab-item:hover .tab-icon {
+.app-bar-1 .tab-item:hover .tab-text,
+.app-bar-1 .tab-item:hover .tab-icon {
   color: rgb(0, 101, 255);
 }
 
