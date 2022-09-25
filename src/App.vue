@@ -58,12 +58,18 @@
         <InformationOutlineIcon />
         <BellOutlineIcon />
 
-        <div class="user-icon" v-if="user && user.displayName">
+        <v-btn
+          class="user-icon" v-if="user && user.displayName"
+          @click="profileDropdown = !profileDropdown"
+          plain v-ripple="false"
+        >
           {{ user.displayName.substring(0, 1).toUpperCase() }}
-        </div>
+        </v-btn>
       </div>
     </v-app-bar>
 
+    <ProfileDropdown v-if="profileDropdown" @close="profileDropdown = false"
+       :username="user.displayName" :email="user.email"/>
     <v-main>
       <router-view/>
     </v-main>
@@ -122,6 +128,10 @@ body {
   height: 15px;
 }
 
+.app-bar-2 .v-toolbar__content {
+  padding: 6px 0px 6px 8px!important;
+}
+
 .buttons {
   height: 100%;
   display: flex;
@@ -140,7 +150,7 @@ body {
 
 .user,
 .user span,
-.user .user-icon {
+.user-icon {
   display: flex;
   align-items: center;
 }
@@ -149,15 +159,21 @@ body {
 .user .user-icon {
   justify-content: center;
 
-  width: 32px;
-  height: 32px;
+  width: 32px!important;
+  min-width: 32px!important;
+  height: 32px!important;
 }
 
-.user .user-icon {
+.user-icon {
   border-radius: 100%;
   background: #0052cc;
 
   font-size: 14px;
+}
+
+.user-icon .v-btn__content {
+  opacity: 1!important;
+  color: #fff!important;
 }
 
 .user span {
@@ -170,7 +186,6 @@ body {
 }
 
 .user span:hover {
-  background: rgba(255, 255, 255, 0.2);
   cursor: pointer;
 }
 
@@ -231,6 +246,8 @@ import BellOutlineIcon from 'vue-material-design-icons/BellOutline.vue';
 import TabsList from './components/TabsList.vue';
 import TabsList2 from './components/TabsList2.vue';
 
+import ProfileDropdown from './components/ProfileDropdown.vue';
+
 import PageFooter from './components/PageFooter.vue';
 import PageFooter2 from './components/PageFooter2.vue';
 
@@ -245,6 +262,7 @@ export default Vue.extend({
     DotsGridIcon,
     InformationOutlineIcon,
     BellOutlineIcon,
+    ProfileDropdown,
   },
 
   created() {
@@ -262,6 +280,8 @@ export default Vue.extend({
 
   data: () => ({
     user: {},
+
+    profileDropdown: false,
 
     tabs: [
       {
