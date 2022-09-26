@@ -10,18 +10,21 @@ I plan to have it up an running in around a week of work although it wont be ful
 Download all the files and put them into a folder.<br>
 Open the console and navigate to the folder you put all of those folders into.<br>
 Run ```npm i``` to install all the node modules.
+<br><br>
+Open [Firebase](https://console.firebase.google.com/u/0/) and create a project and open the Build tab and click Authentication,<br>
+Sign-in methods and add Email/Password as a new provider
 ### Start dev server
 Run ```npm run serve``` in the console and go to ```http://localhost:8080```
 ### Build application
 Run ```npm run build``` in the console
-
+<br><br>
 # Technologies:
 The backend currently uses Firebase to handle all requests.<br>
 And the frontend uses Vue 2.6 with the following plugins:
 - vue-router
 - Vuetify
 - MDI Icons
-
+<br><br>
 # Done:
 - Home page
 - Login & Signup Design
