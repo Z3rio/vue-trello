@@ -17,6 +17,9 @@ Sign-in methods and add Email/Password as a new provider
 Run ```npm run serve``` in the console and go to ```http://localhost:8080```
 ### Build application
 Run ```npm run build``` in the console
+# Contribute
+We are very happy to get help and potential contributions for this project.<br>
+If you find an issue then open an issue in the github page. If you want to fix an issue then simply create an Pull Request and we we will look over it ! :)
 <br><br>
 # Technologies:
 The backend currently uses Firebase to handle all requests.<br>
