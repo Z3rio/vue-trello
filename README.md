@@ -3,8 +3,8 @@ This is just a clone of trello that I have started working on.<br>
 I plan to have it up an running in around a week of work although it wont be fully finished in that time frame.
 
 # Requirements:
-- NPM / Node.js
-- Firebase Database
+- [NPM / Node.js](https://nodejs.org/en/)
+- [Firebase Database](https://firebase.google.com/)
 
 # Installation:
 Download all the files and put them into a folder.<br>
