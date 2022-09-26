@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import HomePage from '../components/HomePage.vue';
+import HomePage from '../components/pages/HomePage.vue';
 
 export default Vue.extend({
   name: 'HomeView',

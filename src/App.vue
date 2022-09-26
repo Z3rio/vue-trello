@@ -243,13 +243,13 @@ import DotsGridIcon from 'vue-material-design-icons/DotsGrid.vue';
 import InformationOutlineIcon from 'vue-material-design-icons/InformationOutline.vue';
 import BellOutlineIcon from 'vue-material-design-icons/BellOutline.vue';
 
-import TabsList from './components/TabsList.vue';
-import TabsList2 from './components/TabsList2.vue';
+import TabsList from './components/tabs/TabsList.vue';
+import TabsList2 from './components/tabs/TabsList2.vue';
 
 import ProfileDropdown from './components/ProfileDropdown.vue';
 
-import PageFooter from './components/PageFooter.vue';
-import PageFooter2 from './components/PageFooter2.vue';
+import PageFooter from './components/footers/PageFooter.vue';
+import PageFooter2 from './components/footers/PageFooter2.vue';
 
 export default Vue.extend({
   name: 'App',

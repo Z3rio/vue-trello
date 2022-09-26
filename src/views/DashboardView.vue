@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import DashboardPage from '../components/DashboardPage.vue';
+import DashboardPage from '../components/pages/DashboardPage.vue';
 
 export default Vue.extend({
   name: 'DashboardView',

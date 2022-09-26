@@ -1,15 +1,15 @@
 <template>
-  <div class="login-container">
+  <div class="signup-container">
     <img
       src="https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/trello-header-logos/167dc7b9900a5b241b15ba21f8037cf8/trello-logo-blue.svg"
       alt="Trello Logo">
 
-    <div class="login-form">
-      <div class="error-message" v-if="loginError !== ''">
-        {{loginError}}
+    <div class="signup-form">
+      <div class="error-message" v-if="signupError !== ''">
+        {{signupError}}
       </div>
 
-      <h1>Log in to Trello</h1>
+      <h1>Sign up for your account</h1>
 
       <v-text-field
         label="Enter email"
@@ -24,12 +24,16 @@
         v-model="password"
         v-if="continued"
       ></v-text-field>
+
+      <p class="tos">By signing up, you confirm that you've read and accepted our
+        Terms of Service and Privacy Policy.</p>
+
       <v-btn
         elevation="0" v-ripple="false" plain
         :disabled="email=='' || validate(email) == false"
-        @click="() => {
+        @click="()=> {
           if (continued) {
-            login();
+            signup()
           } else if (validate(email)) {
             continued = true;
           }
@@ -38,10 +42,10 @@
         Continue
       </v-btn>
 
-      <div v-if="email == ''">
+      <div  v-if="email == ''">
         <p class="or">OR</p>
 
-        <div class="social-logins">
+        <div class="social-signups">
           <v-btn
             elevation="2" v-ripple="false" plain
           >
@@ -70,32 +74,27 @@
       </div>
 
       <div class="bottom-help">
-        <a>Can't log in?</a>
-        <a>Sign up for an account</a>
+        <a href="http://localhost:8080/login">Already have an account? Log in</a>
       </div>
-    </div>
-    <div class="bottom-help">
-      <a>Privacy Policy</a>
-      <a>Terms of Service</a>
     </div>
   </div>
 </template>
 
 <!-- eslint-disable max-len -->
 <style>
-.login-container {
+.signup-container {
   height: 100%;
   width: 100%;
 }
 
-.login-container img {
+.signup-container img {
   display: block;
 
   height: 43px;
   margin: 40px auto;
 }
 
-.login-form {
+.signup-form {
   max-width: 400px;
 
   margin: 0 auto;
@@ -105,7 +104,14 @@
   box-shadow: rgb(0 0 0 / 10%) 0 0 10px;
 }
 
-.login-form h1 {
+.signup-form .tos {
+  font-size: 12px;
+  font-family: '-apple-system',BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+  font-weight: 300;
+  color: #5e6c84;
+}
+
+.signup-form h1 {
   color: #5e6c84;
   font-family: '-apple-system',BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
   font-size: 16px;
@@ -116,75 +122,70 @@
   margin-bottom: 25px;
 }
 
-.login-form .v-input {
+.signup-form .v-input {
   margin: 0 0 1.2em;
 }
 
-.login-form .v-input fieldset {
+.signup-form .v-input fieldset {
   border-width: 2px;
 }
 
-.login-form .v-input:not(.v-input--is-focused) fieldset {
+.signup-form .v-input:not(.v-input--is-focused) fieldset {
   border-color: #dfe1e6;
 }
 
-.login-form .v-input.v-input--is-focused fieldset {
+.signup-form .v-input.v-input--is-focused fieldset {
   border-color: #4B9AFF;
 }
 
-.login-form .v-input__slot {
+.signup-form .v-input__slot {
   width: 100%;
 }
 
-.login-form .v-input .v-label {
+.signup-form .v-input .v-label {
   line-height: 15px;
 }
 
-.login-form .v-input__control > .v-input__slot {
+.signup-form .v-input__control > .v-input__slot {
   height: 50px!important;
   min-height: 0px!important;
 }
 
-.login-form>button:not(.v-btn--disabled) {
-  background: #5AAC44;
-}
-
-.login-form>button.v-btn--disabled {
-  background: #E2E4E6;
-}
-
-.login-form>button:not(.v-btn--disabled) .v-btn__content {
-  color: white;
-}
-
-.login-form>button.v-btn--disabled .v-btn__content {
-  color: #8c8c8c;
-  font-weight: bold!important;
-}
-
-.login-form .v-text-field--outlined > .v-input__control > .v-input__slot {
+.signup-form .v-text-field--outlined > .v-input__control > .v-input__slot {
   background: #fafbfc;
 }
 
-.login-form button {
+.signup-form button {
   width: 100%;
 }
 
-.login-form>button {
+.signup-form>button:not(.v-btn--disabled) {
   background: #5AAC44;
 }
 
-.login-form>button .v-btn__content {
-  color: white;
+.signup-form>button.v-btn--disabled {
+  background: #E2E4E6;
+}
+
+.signup-form>button .v-btn__content {
   opacity: 1!important;
   text-transform: none;
 }
 
-.login-form>button:hover {
+.signup-form>button:not(.v-btn--disabled) .v-btn__content {
+  color: white;
+}
+
+.signup-form>button.v-btn--disabled .v-btn__content {
+  color: #8c8c8c;
+  font-weight: bold!important;
+}
+
+.signup-form>button:hover {
   background: #61BD4F;
 }
 
-.login-form p.or {
+.signup-form p.or {
   text-align: center;
   font-size: 12px;
   font-family: '-apple-system',BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
@@ -194,7 +195,12 @@
   margin-bottom: 16px;
 }
 
-.login-form .social-logins .v-btn__content {
+.signup-form .social-signups button:hover {
+  background-color: #f9fafc;
+  transition: 200ms;
+}
+
+.signup-form .social-signups .v-btn__content {
   font-size: 14px;
   color: #505f79;
   font-family: '-apple-system',BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
@@ -206,15 +212,10 @@
   gap: 7px;
 }
 
-.login-form .social-logins {
+.signup-form .social-signups {
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
-
-.signup-form .social-logins button:hover {
-  background-color: #f9fafc;
-  transition: 200ms;
 }
 
 .btn-icon.google-icon {
@@ -240,24 +241,25 @@
   height: 18px;
 }
 
-.login-form .bottom-help,
-.login-container .bottom-help {
+.signup-form .bottom-help,
+.signup-container .bottom-help {
   width: fit-content;
 
   margin: 1em auto;
 }
 
-.login-form .bottom-help a,
-.login-container .bottom-help a {
+.signup-form .bottom-help a,
+.signup-container .bottom-help a {
   color: #0052cc;
 
   font-family: '-apple-system',BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
   font-size: 14px;
   font-weight: 300;
+  text-decoration: none;
 }
 
-.login-form .bottom-help a:last-child::before,
-.login-container .bottom-help a:last-child::before {
+.signup-form .bottom-help a:last-child:not(:first-child)::before,
+.signup-container .bottom-help a:last-child:not(:first-child)::before {
   content: '\2022';
   margin: 0 8px 0px 4px;
   color: black;
@@ -281,7 +283,7 @@ import Vue from 'vue';
 import firebase from 'firebase';
 
 export default Vue.extend({
-  name: 'LoginPage',
+  name: 'SignUpPage',
 
   data: () => ({
     email: '',
@@ -289,7 +291,7 @@ export default Vue.extend({
 
     continued: false,
 
-    loginError: '',
+    signupError: '',
   }),
 
   methods: {
@@ -297,14 +299,22 @@ export default Vue.extend({
       return /^(([^<>()\\[\]\\.,;:\s@\\"]+(\.[^<>()\\[\]\\.,;:\s@\\"]+)*)|(\\".+\\"))@(([^<>()\\.,;\s@\\"]+\.{0,1})+([^<>()\\.,;:\s@\\"]{2,}|[\d\\.]+))$/.test(email);
     },
 
-    login() {
-      if (this.validate(this.email) && this.password !== '') {
-        firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
-          (user) => {
-            this.$router.push('/dashboard');
+    async signup() {
+      if (this.validate(this.email)) {
+        firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
+          (res) => {
+            firebase.auth().signOut();
+            this.signupError = '';
+            res.user
+              .updateProfile({
+                displayName: this.email.split('@')[0],
+              })
+              .then(() => {
+                this.$router.push('/login');
+              });
           },
         ).catch((err) => {
-          this.loginError = err.message;
+          this.signupError = err.message;
         });
       }
     },

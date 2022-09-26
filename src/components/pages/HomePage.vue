@@ -342,9 +342,9 @@ button.thick {
 <script lang="ts">
 import Vue from 'vue';
 import PlayCircleOutlineIcon from 'vue-material-design-icons/PlayCircleOutline.vue';
-import FeatureList from './FeatureList.vue';
-import ExtraFeatureList from './ExtraFeatureList.vue';
-import ClientTestimonials from './ClientTestimonials.vue';
+import FeatureList from '../featurelists/FeatureList.vue';
+import ExtraFeatureList from '../featurelists/ExtraFeatureList.vue';
+import ClientTestimonials from '../testimonials/ClientTestimonials.vue';
 
 export default Vue.extend({
   name: 'HomePage',

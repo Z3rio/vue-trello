@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import LoginPage from '../components/LoginPage.vue';
+import LoginPage from '../components/pages/LoginPage.vue';
 
 export default Vue.extend({
   name: 'LoginView',
