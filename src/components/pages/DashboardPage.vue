@@ -31,7 +31,8 @@
       <WorkspaceInfo v-for="(data, index) in workspaces" :key="index" :data="data"/>
     </div>
     <div class="right-container">
-
+      <PopularTemplates :templates="templates"/>
+      <YourWorkspaces />
     </div>
   </div>
 </template>
@@ -50,15 +51,15 @@
   padding-bottom: 40px;
 
   max-height: 90vh;
+  height: fit-content;
   width: 240px;
 
   display: flex;
   flex-direction: column;
-
 }
 
 .dashboard-container .right-container {
-  margin: 0px 16px 0;
+  margin: 40px 16px 0;
 
   max-width: 825px;
   min-width: 288px;
@@ -132,18 +133,43 @@ import Vue from 'vue';
 import firebase from 'firebase';
 
 import WorkspaceInfo from '../dashboard/WorkspaceInfo.vue';
+import PopularTemplates from '../dashboard/PopularTemplates.vue';
+import YourWorkspaces from '../dashboard/YourWorkspaces.vue';
 
 export default Vue.extend({
   name: 'DashboardPage',
 
   components: {
     WorkspaceInfo,
+    PopularTemplates,
+    YourWorkspaces,
   },
 
   data: () => ({
     user: {},
 
     tab: 'boards',
+
+    /* eslint-disable max-len */
+    templates: [
+      {
+        name: 'Project Management',
+        background: 'https://trello-backgrounds.s3.amazonaws.com/SharedBackground/480x336/24baa6609b89fb8eb0cc0aceb70eaf36/photo-1557682250-33bd709cbe85.jpg',
+      },
+      {
+        name: 'Kanban Template',
+        background: 'https://trello-backgrounds.s3.amazonaws.com/SharedBackground/480x322/47f09f0e3910259568294477d0bdedac/photo-1576502200916-3808e07386a5.jpg',
+      },
+      {
+        name: 'Simple Project Board',
+        background: 'https://trello-backgrounds.s3.amazonaws.com/SharedBackground/480x270/efea59b89ada0934c5256715fb180bd9/photo-1463107971871-fbac9ddb920f.jpg',
+      },
+      {
+        name: 'Remote Team Hub',
+        background: 'https://trello-backgrounds.s3.amazonaws.com/SharedBackground/480x480/b10c8bd87b80f7abeb56820f50c4db66/photo-1474487548417-781cb71495f3.jpg',
+      },
+    ],
+    /* eslint-enable max-len */
 
     workspaces: [
       {
