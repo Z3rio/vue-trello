@@ -23,26 +23,24 @@ div {
 }
 
 div h1 {
-  color: #6B778C;
+  color: #6b778c;
   font-size: 26px;
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans,
+    Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
   font-weight: 600;
 
   margin-bottom: 24px;
 }
 
 div p {
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Droid Sans,Helvetica Neue,sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans,
+    Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
   font-size: 18px;
   font-weight: 400;
 }
 </style>
 <!-- eslint-enable max-len -->
 
-<script lang="ts">
-import Vue from 'vue';
-
-export default Vue.extend({
-  name: 'NotFoundView',
-});
+<script setup lang="ts">
+defineProps<{}>();
 </script>

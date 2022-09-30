@@ -1,6 +1,94 @@
+<script setup lang="ts">
+import { ref, Vue, onMounted } from "vue";
+import { RouterLink, RouterView } from "vue-router";
+
+import firebase from "firebase";
+
+import TabsList from "./components/tabs/TabsList.vue";
+import TabsList2 from "./components/tabs/TabsList2.vue";
+
+import ProfileDropdown from "./components/ProfileDropdown.vue";
+
+import PageFooter from "./components/footers/PageFooter.vue";
+import PageFooter2 from "./components/footers/PageFooter2.vue";
+
+const user = ref({});
+
+const profileDropdown = ref(false);
+
+const tabs = ref([
+  {
+    label: "Features",
+    isDropdown: true,
+  },
+  {
+    label: "Solutions",
+    isDropdown: true,
+  },
+  {
+    label: "Plans",
+    isDropdown: true,
+  },
+  {
+    label: "Pricing",
+    isDropdown: false,
+  },
+  {
+    label: "Resources",
+    isDropdown: true,
+  },
+]);
+
+const tabs2 = ref([
+  {
+    label: "Workspaces",
+    isDropdown: true,
+  },
+  {
+    label: "Recent",
+    isDropdown: true,
+  },
+  {
+    label: "Starred",
+    isDropdown: true,
+  },
+  {
+    label: "Templates",
+    isDropdown: true,
+  },
+  {
+    label: "Create",
+    isDropdown: false,
+    background: "rgba(0, 0, 0, 0.3)",
+  },
+]);
+
+onMounted(() => {
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      this.user = user;
+
+      const path = this.$route.name;
+      if (
+        path === "home" ||
+        path === "home2" ||
+        path === "login" ||
+        path === "signup"
+      ) {
+        this.$router.push("/dashboard");
+      }
+    }
+  });
+});
+</script>
+
 <template>
-  <v-app :style="{background: $route.meta.background !== undefined ?
-    $route.meta.background : '#fff'}">
+  <v-app
+    :style="{
+      background:
+        $route.meta.background !== undefined ? $route.meta.background : '#fff',
+    }"
+  >
     <v-app-bar
       app
       color="#fff"
@@ -9,25 +97,27 @@
       class="app-bar-1"
     >
       <!-- eslint-disable max-len -->
-      <a class="d-flex align-center text-decoration-none" href="http://localhost:8080" ref="Logo">
-        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8c/Trello_logo.svg/1280px-Trello_logo.svg.png" alt="Logo">
+      <a
+        class="d-flex align-center text-decoration-none"
+        href="http://localhost:8080"
+        ref="Logo"
+      >
+        <img
+          src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8c/Trello_logo.svg/1280px-Trello_logo.svg.png"
+          alt="Logo"
+        />
       </a>
       <!-- eslint-enable max-len -->
       <TabsList :tabs="tabs" />
 
       <div class="buttons">
         <a href="http://localhost:8080/login">
-          <v-btn
-            class="login_button"
-            elevation="0"
-            color="#fff"
-          >Log In</v-btn>
+          <v-btn class="login_button" elevation="0" color="#fff">Log In</v-btn>
         </a>
         <a href="http://localhost:8080/signup">
-          <v-btn
-            color="#0065ff"
-            elevation="0"
-          >Get Trello for free</v-btn>
+          <v-btn color="#fff" elevation="0" class="signup_button"
+            >Get Trello for free</v-btn
+          >
         </a>
       </div>
     </v-app-bar>
@@ -40,9 +130,16 @@
       class="app-bar-2"
     >
       <!-- eslint-disable max-len -->
-      <DotsGridIcon />
-      <a class="d-flex align-center text-decoration-none" href="http://localhost:8080" ref="Logo">
-        <img src="https://a.trellocdn.com/prgb/dist/images/header-logo-spirit-loading.87e1af770a49ce8e84e3.gif" alt="Logo">
+      <v-icon>mdi-dots-grid</v-icon>
+      <a
+        class="d-flex align-center text-decoration-none"
+        href="http://localhost:8080"
+        ref="Logo"
+      >
+        <img
+          src="https://a.trellocdn.com/prgb/dist/images/header-logo-spirit-loading.87e1af770a49ce8e84e3.gif"
+          alt="Logo"
+        />
       </a>
       <!-- eslint-enable max-len -->
       <TabsList2 :tabs="tabs2" />
@@ -50,28 +147,36 @@
       <div class="user">
         <v-text-field
           placeholder="Search"
-          solo hide-details flat
+          solo
+          hide-details
+          flat
           prepend-inner-icon="mdi-magnify"
           background-color="rgba(255, 255, 255, 0.2)"
         ></v-text-field>
 
-        <InformationOutlineIcon />
-        <BellOutlineIcon />
+        <v-icon>mdi-information-outline</v-icon>
+        <v-icon>mdi-bell-outline</v-icon>
 
         <v-btn
-          class="user-icon" v-if="user && user.displayName"
+          class="user-icon"
+          v-if="user && user.displayName"
           @click="profileDropdown = !profileDropdown"
-          plain v-ripple="false"
+          plain
+          v-ripple="false"
         >
           {{ user.displayName.substring(0, 1).toUpperCase() }}
         </v-btn>
       </div>
     </v-app-bar>
 
-    <ProfileDropdown v-if="profileDropdown" @close="profileDropdown = false"
-       :username="user.displayName" :email="user.email"/>
+    <ProfileDropdown
+      v-if="profileDropdown"
+      @close="profileDropdown = false"
+      :username="user.displayName"
+      :email="user.email"
+    />
     <v-main>
-      <router-view/>
+      <RouterView />
     </v-main>
 
     <PageFooter v-if="$route.meta.footer === 1" />
@@ -81,28 +186,28 @@
 
 <style>
 @font-face {
-  font-family: 'Charlie Display';
-  src: url('./fonts/CharlieDisplay-Regular.ttf');
+  font-family: "Charlie Display";
+  src: url("./fonts/CharlieDisplay-Regular.ttf");
 }
 
 @font-face {
-  font-family: 'Charlie Display Bold';
-  src: url('./fonts/CharlieDisplay-Bold.ttf');
+  font-family: "Charlie Display Bold";
+  src: url("./fonts/CharlieDisplay-Bold.ttf");
 }
 
 @font-face {
-  font-family: 'Charlie Display Semi Bold';
-  src: url('./fonts/CharlieDisplay-Semibold.ttf');
+  font-family: "Charlie Display Semi Bold";
+  src: url("./fonts/CharlieDisplay-Semibold.ttf");
 }
 
 @font-face {
-  font-family: 'Charlie Text';
-  src: url('./fonts/CharlieText-Regular.ttf');
+  font-family: "Charlie Text";
+  src: url("./fonts/CharlieText-Regular.ttf");
 }
 
 @font-face {
-  font-family: 'Charlie Text Semi Bold';
-  src: url('./fonts/CharlieText-Semibold.ttf');
+  font-family: "Charlie Text Semi Bold";
+  src: url("./fonts/CharlieText-Semibold.ttf");
 }
 
 body::-webkit-scrollbar {
@@ -128,8 +233,12 @@ body {
   height: 15px;
 }
 
+.app-bar-1 .v-toolbar__content {
+  padding: 0 0 0 1rem !important;
+}
+
 .app-bar-2 .v-toolbar__content {
-  padding: 6px 0px 6px 8px!important;
+  padding: 6px 0px 6px 8px !important;
 }
 
 .buttons {
@@ -159,9 +268,9 @@ body {
 .user .user-icon {
   justify-content: center;
 
-  width: 32px!important;
-  min-width: 32px!important;
-  height: 32px!important;
+  width: 32px !important;
+  min-width: 32px !important;
+  height: 32px !important;
 }
 
 .user-icon {
@@ -172,8 +281,8 @@ body {
 }
 
 .user-icon .v-btn__content {
-  opacity: 1!important;
-  color: #fff!important;
+  opacity: 1 !important;
+  color: #fff !important;
 }
 
 .user span {
@@ -190,27 +299,35 @@ body {
 }
 
 .buttons button {
-  height: 100%!important;
+  height: 100% !important;
   border-radius: 0;
 
-  font-family: 'Charlie Text', sans-serif;
-  font-size: 1.2rem!important;
+  font-family: "Charlie Text", sans-serif;
+  font-size: 1.2rem !important;
 
-  text-transform: none!important;
+  text-transform: none !important;
 }
 
 .buttons a {
-  text-decoration: none!important;
+  text-decoration: none !important;
 }
 
-.buttons .login_button {
+.buttons .login_button .v-btn__content {
   color: #172b4d;
 }
 
+.buttons .signup_button {
+  background: #0065ff;
+}
+
+.buttons .signup_button:hover {
+  background: #0747a6;
+}
+
 .v-toolbar__content {
-  padding-top: 0!important;
-  padding-bottom: 0!important;
-  padding-right: 0!important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  padding-right: 0 !important;
 
   display: flex;
   flex-direction: row;
@@ -224,7 +341,7 @@ body {
 
 .app-bar-2,
 .app-bar-2 .v-toolbar__content {
-  height: 44px!important;
+  height: 44px !important;
 }
 
 .app-bar-2 .user .v-input__control,
@@ -234,100 +351,3 @@ body {
   width: 200px;
 }
 </style>
-
-<script lang="ts">
-import Vue from 'vue';
-import firebase from 'firebase';
-
-import DotsGridIcon from 'vue-material-design-icons/DotsGrid.vue';
-import InformationOutlineIcon from 'vue-material-design-icons/InformationOutline.vue';
-import BellOutlineIcon from 'vue-material-design-icons/BellOutline.vue';
-
-import TabsList from './components/tabs/TabsList.vue';
-import TabsList2 from './components/tabs/TabsList2.vue';
-
-import ProfileDropdown from './components/ProfileDropdown.vue';
-
-import PageFooter from './components/footers/PageFooter.vue';
-import PageFooter2 from './components/footers/PageFooter2.vue';
-
-export default Vue.extend({
-  name: 'App',
-
-  components: {
-    TabsList,
-    TabsList2,
-    PageFooter,
-    PageFooter2,
-    DotsGridIcon,
-    InformationOutlineIcon,
-    BellOutlineIcon,
-    ProfileDropdown,
-  },
-
-  created() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.user = user;
-
-        const path = this.$route.name;
-        if (path === 'home' || path === 'home2' || path === 'login' || path === 'signup') {
-          this.$router.push('/dashboard');
-        }
-      }
-    });
-  },
-
-  data: () => ({
-    user: {},
-
-    profileDropdown: false,
-
-    tabs: [
-      {
-        label: 'Features',
-        isDropdown: true,
-      },
-      {
-        label: 'Solutions',
-        isDropdown: true,
-      },
-      {
-        label: 'Plans',
-        isDropdown: true,
-      },
-      {
-        label: 'Pricing',
-        isDropdown: false,
-      },
-      {
-        label: 'Resources',
-        isDropdown: true,
-      },
-    ],
-    tabs2: [
-      {
-        label: 'Workspaces',
-        isDropdown: true,
-      },
-      {
-        label: 'Recent',
-        isDropdown: true,
-      },
-      {
-        label: 'Starred',
-        isDropdown: true,
-      },
-      {
-        label: 'Templates',
-        isDropdown: true,
-      },
-      {
-        label: 'Create',
-        isDropdown: false,
-        background: 'rgba(0, 0, 0, 0.3)',
-      },
-    ],
-  }),
-});
-</script>

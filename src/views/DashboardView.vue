@@ -1,20 +1,11 @@
 <template>
-  <DashboardPage :user="user"/>
+  <DashboardPage :user="user" />
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-import DashboardPage from '../components/pages/DashboardPage.vue';
+<script setup lang="ts">
+import DashboardPage from "../components/pages/DashboardPage.vue";
 
-export default Vue.extend({
-  name: 'DashboardView',
-
-  props: {
-    user: Object,
-  },
-
-  components: {
-    DashboardPage,
-  },
-});
+defineProps<{
+  user: Object;
+}>();
 </script>

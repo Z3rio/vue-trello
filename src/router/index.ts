@@ -1,72 +1,69 @@
-import Vue from 'vue';
-import VueRouter, { RouteConfig } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
-import SignUpView from '../views/SignUpView.vue';
-import LoginView from '../views/LoginView.vue';
-import NotFoundView from '../views/NotFoundView.vue';
-import DashboardView from '../views/DashboardView.vue';
+import { createRouter, createWebHistory } from "vue-router";
 
-Vue.use(VueRouter);
+import HomeView from "../views/HomeView.vue";
+import SignUpView from "../views/SignUpView.vue";
+import LoginView from "../views/LoginView.vue";
+import NotFoundView from "../views/NotFoundView.vue";
+import DashboardView from "../views/DashboardView.vue";
 
-const routes2: Array<RouteConfig> = [
-  {
-    path: '/',
-    name: 'home',
-    meta: {
-      footer: 1,
-      topnav: 1,
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  mode: "history",
+  routes: [
+    {
+      path: "/",
+      name: "home",
+      meta: {
+        footer: 1,
+        topnav: 1,
+      },
+      component: HomeView,
     },
-    component: HomeView,
-  },
-  {
-    path: '/home',
-    name: 'home2',
-    meta: {
-      footer: 1,
-      topnav: 1,
+    {
+      path: "/home",
+      name: "home2",
+      meta: {
+        footer: 1,
+        topnav: 1,
+      },
+      component: HomeView,
     },
-    component: HomeView,
-  },
-  {
-    path: '/login',
-    name: 'login',
-    meta: {
-      footer: 2,
-      background: '#f9fafc',
+    {
+      path: "/login",
+      name: "login",
+      meta: {
+        footer: 2,
+        background: "#f9fafc",
+      },
+      component: LoginView,
     },
-    component: LoginView,
-  },
-  {
-    path: '/signup',
-    name: 'signup',
-    meta: {
-      footer: 2,
-      background: '#f9fafc',
+    {
+      path: "/signup",
+      name: "signup",
+      meta: {
+        footer: 2,
+        background: "#f9fafc",
+      },
+      component: SignUpView,
     },
-    component: SignUpView,
-  },
-  {
-    path: '/dashboard',
-    name: 'dashboard',
-    meta: {
-      topnav: 2,
+    {
+      path: "/dashboard",
+      name: "dashboard",
+      meta: {
+        topnav: 2,
+      },
+      component: DashboardView,
     },
-    component: DashboardView,
-  },
-  {
-    path: '*',
-    name: '404',
-    meta: {
-      footer: 1,
-      topnav: 1,
+    {
+      path: "/:pathMatch(.*)*",
+      name: "404",
+      meta: {
+        footer: 1,
+        topnav: 1,
+      },
+      component: NotFoundView,
     },
-    component: NotFoundView,
-  },
-];
-
-const router = new VueRouter({
-  routes: routes2,
-  mode: 'history',
+  ],
 });
 
 export default router;

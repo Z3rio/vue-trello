@@ -1,12 +1,53 @@
+<script>
+import { ref } from "vue";
+import firebase from "firebase";
+
+const email = ref("");
+const password = ref("");
+
+const continued = ref(false);
+
+const signupError = ref("");
+
+function validate(email) {
+  return /^(([^<>()\\[\]\\.,;:\s@\\"]+(\.[^<>()\\[\]\\.,;:\s@\\"]+)*)|(\\".+\\"))@(([^<>()\\.,;\s@\\"]+\.{0,1})+([^<>()\\.,;:\s@\\"]{2,}|[\d\\.]+))$/.test(
+    email
+  );
+}
+
+async function signup() {
+  if (validate(email.value)) {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email.value, password.value)
+      .then((res) => {
+        firebase.auth().signOut();
+        signupError.value = "";
+        res.user
+          .updateProfile({
+            displayName: email.value.split("@")[0],
+          })
+          .then(() => {
+            this.$router.push("/login");
+          });
+      })
+      .catch((err) => {
+        signupError.value = err.message;
+      });
+  }
+}
+</script>
+
 <template>
   <div class="signup-container">
     <img
       src="https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/trello-header-logos/167dc7b9900a5b241b15ba21f8037cf8/trello-logo-blue.svg"
-      alt="Trello Logo">
+      alt="Trello Logo"
+    />
 
     <div class="signup-form">
       <div class="error-message" v-if="signupError !== ''">
-        {{signupError}}
+        {{ signupError }}
       </div>
 
       <h1>Sign up for your account</h1>
@@ -14,59 +55,59 @@
       <v-text-field
         label="Enter email"
         type="email"
-        outlined hide-details
+        outlined
+        hide-details
         v-model="email"
       ></v-text-field>
       <v-text-field
         label="Enter password"
         type="password"
-        outlined hide-details
+        outlined
+        hide-details
         v-model="password"
         v-if="continued"
       ></v-text-field>
 
-      <p class="tos">By signing up, you confirm that you've read and accepted our
-        Terms of Service and Privacy Policy.</p>
+      <p class="tos">
+        By signing up, you confirm that you've read and accepted our Terms of
+        Service and Privacy Policy.
+      </p>
 
       <v-btn
-        elevation="0" v-ripple="false" plain
-        :disabled="email=='' || validate(email) == false"
-        @click="()=> {
-          if (continued) {
-            signup()
-          } else if (validate(email)) {
-            continued = true;
+        elevation="0"
+        v-ripple="false"
+        plain
+        :disabled="email == '' || validate(email) == false"
+        @click="
+          () => {
+            if (continued) {
+              signup();
+            } else if (validate(email)) {
+              continued = true;
+            }
           }
-        }"
+        "
       >
         Continue
       </v-btn>
 
-      <div  v-if="email == ''">
+      <div v-if="email == ''">
         <p class="or">OR</p>
 
         <div class="social-signups">
-          <v-btn
-            elevation="2" v-ripple="false" plain
-          >
+          <v-btn elevation="2" v-ripple="false" plain>
             <div class="btn-icon google-icon"></div>
             Continue with Google
           </v-btn>
-          <v-btn
-            elevation="2" v-ripple="false" plain
-          >
+          <v-btn elevation="2" v-ripple="false" plain>
             <div class="btn-icon microsoft-icon"></div>
             Continue with Microsoft
           </v-btn>
-          <v-btn
-            elevation="2" v-ripple="false" plain
-          >
+          <v-btn elevation="2" v-ripple="false" plain>
             <div class="btn-icon apple-icon"></div>
             Continue with Apple
           </v-btn>
-          <v-btn
-            elevation="2" v-ripple="false" plain
-          >
+          <v-btn elevation="2" v-ripple="false" plain>
             <div class="btn-icon slack-icon"></div>
             Continue with Slack
           </v-btn>
@@ -74,7 +115,9 @@
       </div>
 
       <div class="bottom-help">
-        <a href="http://localhost:8080/login">Already have an account? Log in</a>
+        <a href="http://localhost:8080/login"
+          >Already have an account? Log in</a
+        >
       </div>
     </div>
   </div>
@@ -106,14 +149,16 @@
 
 .signup-form .tos {
   font-size: 12px;
-  font-family: '-apple-system',BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+  font-family: "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   font-weight: 300;
   color: #5e6c84;
 }
 
 .signup-form h1 {
   color: #5e6c84;
-  font-family: '-apple-system',BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+  font-family: "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   font-size: 16px;
   font-weight: bold;
   text-align: center;
@@ -135,7 +180,7 @@
 }
 
 .signup-form .v-input.v-input--is-focused fieldset {
-  border-color: #4B9AFF;
+  border-color: #4b9aff;
 }
 
 .signup-form .v-input__slot {
@@ -147,8 +192,8 @@
 }
 
 .signup-form .v-input__control > .v-input__slot {
-  height: 50px!important;
-  min-height: 0px!important;
+  height: 50px !important;
+  min-height: 0px !important;
 }
 
 .signup-form .v-text-field--outlined > .v-input__control > .v-input__slot {
@@ -159,36 +204,37 @@
   width: 100%;
 }
 
-.signup-form>button:not(.v-btn--disabled) {
-  background: #5AAC44;
+.signup-form > button:not(.v-btn--disabled) {
+  background: #5aac44;
 }
 
-.signup-form>button.v-btn--disabled {
-  background: #E2E4E6;
+.signup-form > button.v-btn--disabled {
+  background: #e2e4e6;
 }
 
-.signup-form>button .v-btn__content {
-  opacity: 1!important;
+.signup-form > button .v-btn__content {
+  opacity: 1 !important;
   text-transform: none;
 }
 
-.signup-form>button:not(.v-btn--disabled) .v-btn__content {
+.signup-form > button:not(.v-btn--disabled) .v-btn__content {
   color: white;
 }
 
-.signup-form>button.v-btn--disabled .v-btn__content {
+.signup-form > button.v-btn--disabled .v-btn__content {
   color: #8c8c8c;
-  font-weight: bold!important;
+  font-weight: bold !important;
 }
 
-.signup-form>button:hover {
-  background: #61BD4F;
+.signup-form > button:hover {
+  background: #61bd4f;
 }
 
 .signup-form p.or {
   text-align: center;
   font-size: 12px;
-  font-family: '-apple-system',BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+  font-family: "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   color: #4d4d4d;
 
   margin-top: 16px;
@@ -203,11 +249,12 @@
 .signup-form .social-signups .v-btn__content {
   font-size: 14px;
   color: #505f79;
-  font-family: '-apple-system',BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+  font-family: "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   text-transform: none;
   font-weight: bold;
 
-  opacity: 1!important;
+  opacity: 1 !important;
 
   gap: 7px;
 }
@@ -219,20 +266,24 @@
 }
 
 .btn-icon.google-icon {
-  background: url('https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/8215f6659adc202403198fef903a447e/sign-in-with-google.svg') 0 50% no-repeat;
+  background: url("https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/8215f6659adc202403198fef903a447e/sign-in-with-google.svg")
+    0 50% no-repeat;
 }
 .btn-icon.microsoft-icon {
-  background: url('https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/72ece804e5285ab6507e2406157cda3c/microsoft-logo.svg') no-repeat;
+  background: url("https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/72ece804e5285ab6507e2406157cda3c/microsoft-logo.svg")
+    no-repeat;
   background-size: 100% 100%;
 }
 
 .btn-icon.apple-icon {
-  background: url('https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/6fc4ecf05a97cfb43cfcbb14738a5aa0/apple-logo-black.svg') no-repeat;
+  background: url("https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/6fc4ecf05a97cfb43cfcbb14738a5aa0/apple-logo-black.svg")
+    no-repeat;
   background-size: 100% 100%;
 }
 
 .btn-icon.slack-icon {
-  background: url('https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/267584bf90783090ede8f337d9baf909/slack-logo.svg') no-repeat;
+  background: url("https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/267584bf90783090ede8f337d9baf909/slack-logo.svg")
+    no-repeat;
   background-size: 100% 100%;
 }
 
@@ -252,7 +303,8 @@
 .signup-container .bottom-help a {
   color: #0052cc;
 
-  font-family: '-apple-system',BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+  font-family: "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   font-size: 14px;
   font-weight: 300;
   text-decoration: none;
@@ -260,7 +312,7 @@
 
 .signup-form .bottom-help a:last-child:not(:first-child)::before,
 .signup-container .bottom-help a:last-child:not(:first-child)::before {
-  content: '\2022';
+  content: "\2022";
   margin: 0 8px 0px 4px;
   color: black;
 }
@@ -273,51 +325,8 @@
 
   color: #fbedeb;
   font-size: 14px;
-  font-family: '-apple-system',BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+  font-family: "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 </style>
 <!-- eslint-enable max-len -->
-
-<script>
-import Vue from 'vue';
-import firebase from 'firebase';
-
-export default Vue.extend({
-  name: 'SignUpPage',
-
-  data: () => ({
-    email: '',
-    password: '',
-
-    continued: false,
-
-    signupError: '',
-  }),
-
-  methods: {
-    validate(email) {
-      return /^(([^<>()\\[\]\\.,;:\s@\\"]+(\.[^<>()\\[\]\\.,;:\s@\\"]+)*)|(\\".+\\"))@(([^<>()\\.,;\s@\\"]+\.{0,1})+([^<>()\\.,;:\s@\\"]{2,}|[\d\\.]+))$/.test(email);
-    },
-
-    async signup() {
-      if (this.validate(this.email)) {
-        firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
-          (res) => {
-            firebase.auth().signOut();
-            this.signupError = '';
-            res.user
-              .updateProfile({
-                displayName: this.email.split('@')[0],
-              })
-              .then(() => {
-                this.$router.push('/login');
-              });
-          },
-        ).catch((err) => {
-          this.signupError = err.message;
-        });
-      }
-    },
-  },
-});
-</script>

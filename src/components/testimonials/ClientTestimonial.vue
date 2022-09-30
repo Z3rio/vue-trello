@@ -1,19 +1,30 @@
+<script setup lang="ts">
+const props = defineProps<{
+  data: Object;
+}>();
+</script>
+
 <template>
   <div class="testimonial">
     <div class="quote">
       <div class="logo"></div>
       <div class="quoteTextDiv">
-        <p class="quoteText">{{data.quote}}</p>
+        <p class="quoteText">{{ data.quote }}</p>
 
         <div class="footer">
           <div class="author">
-            <b>{{data.person.name}}</b> - {{data.person.jobTitle}}
+            <b>{{ data.person.name }}</b> - {{ data.person.jobTitle }}
           </div>
           <div class="industry">
-            Industry: <b>{{data.industry}}</b>
+            Industry: <b>{{ data.industry }}</b>
           </div>
-          <img :src="data.logo.url" alt="Industry Image"
-               :height="data.logo.height" :width="data.logo.width" class="jobLogo">
+          <img
+            :src="data.logo.url"
+            alt="Industry Image"
+            :height="data.logo.height"
+            :width="data.logo.width"
+            class="jobLogo"
+          />
         </div>
       </div>
     </div>
@@ -33,7 +44,7 @@
 }
 
 .quote .quoteText {
-  font-family: 'Charlie Display', sans-serif;
+  font-family: "Charlie Display", sans-serif;
   font-size: 2.25rem;
 }
 
@@ -59,11 +70,11 @@
 
   gap: 1.5rem;
 
-  font-family: 'Charlie Text', sans-serif;
+  font-family: "Charlie Text", sans-serif;
 }
 
 .footer b {
-  font-family: 'Charlie Display Semi Bold', sans-serif;
+  font-family: "Charlie Display Semi Bold", sans-serif;
   color: black;
 }
 
@@ -81,15 +92,3 @@
   margin-left: auto;
 }
 </style>
-
-<script>
-import Vue from 'vue';
-
-export default Vue.extend({
-  name: 'ClientTestimonial',
-
-  props: {
-    data: Object,
-  },
-});
-</script>

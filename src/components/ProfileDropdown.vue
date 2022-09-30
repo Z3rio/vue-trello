@@ -1,62 +1,92 @@
+<script setup lang="ts">
+import Vue from "vue";
+import firebase from "firebase";
+
+const props = defineProps<{
+  username: String;
+  email: String;
+}>();
+
+const vClickOutside = {
+  bind(el, binding, vnode) {
+    // eslint-disable-next-line no-param-reassign
+    el.clickOutsideEvent = function (event) {
+      if (!(el === event.target || el.contains(event.target))) {
+        vnode.context[binding.expression](event);
+      }
+    };
+    document.body.addEventListener("click", el.clickOutsideEvent);
+  },
+  unbind(el) {
+    document.body.removeEventListener("click", el.clickOutsideEvent);
+  },
+};
+
+function logOut() {
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      firebase.auth().onAuthStateChanged(() => {
+        this.$router.push("/home");
+        this.$emit("close");
+      });
+    });
+}
+</script>
+
 <template>
   <!-- eslint-disable -->
   <div class="fullscreen">
-  <!-- eslint-enable -->
-    <div class="profile-dropdown" v-click-outside="() => {$emit('close')}">
+    <!-- eslint-enable -->
+    <div
+      class="profile-dropdown"
+      v-click-outside="
+        () => {
+          $emit('close');
+        }
+      "
+    >
       <div class="top-information">
         <h1>Account</h1>
-        <CloseIcon :size="20" />
+        <v-icon size="20">mdi-close</v-icon>
       </div>
 
-      <hr>
+      <hr />
 
       <div class="profile-information">
         <v-btn
-          class="user-icon" v-if="username"
+          class="user-icon"
+          v-if="username"
           @click="profileDropdown = !profileDropdown"
-          plain v-ripple="false"
+          plain
+          v-ripple="false"
         >
           {{ username.substring(0, 1).toUpperCase() }}
         </v-btn>
         <div class="text" v-if="username && email">
-          <h1>{{username}}</h1>
-          <p>{{email}}</p>
+          <h1>{{ username }}</h1>
+          <p>{{ email }}</p>
         </div>
       </div>
 
-      <v-btn
-        plain tile block
-      >Add another account</v-btn>
+      <v-btn plain tile block>Add another account</v-btn>
 
-      <hr>
+      <hr />
 
-      <v-btn
-        plain tile block
-      >Profile and visibility</v-btn>
-      <v-btn
-        plain tile block
-      >Activity</v-btn>
-      <v-btn
-        plain tile block
-      >Cards</v-btn>
-      <v-btn
-        plain tile block
-      >Settings</v-btn>
+      <v-btn plain tile block>Profile and visibility</v-btn>
+      <v-btn plain tile block>Activity</v-btn>
+      <v-btn plain tile block>Cards</v-btn>
+      <v-btn plain tile block>Settings</v-btn>
 
-      <hr>
+      <hr />
 
-      <v-btn
-        plain tile block
-      >Help</v-btn>
-      <v-btn
-        plain tile block
-      >Shortcuts</v-btn>
+      <v-btn plain tile block>Help</v-btn>
+      <v-btn plain tile block>Shortcuts</v-btn>
 
-      <hr>
+      <hr />
 
-      <v-btn
-        plain tile block @click="logOut"
-      >Log out</v-btn>
+      <v-btn plain tile block @click="logOut">Log out</v-btn>
     </div>
   </div>
 </template>
@@ -83,7 +113,8 @@
 
   padding: 0 0 12px 0;
 
-  box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25), 0 0 0 1px rgba(9, 30, 66, 0.08);
+  box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25),
+    0 0 0 1px rgba(9, 30, 66, 0.08);
   border-radius: 3px;
   background: #fff;
 }
@@ -111,7 +142,8 @@
   text-align: center;
   color: #5e6c84;
   font-size: 14px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Noto Sans', 'Ubuntu', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Noto Sans", "Ubuntu", "Droid Sans", "Helvetica Neue", sans-serif;
   font-weight: 400;
 }
 
@@ -124,9 +156,9 @@
 .user-icon {
   justify-content: center;
 
-  width: 40px!important;
-  min-width: 40px!important;
-  height: 40px!important;
+  width: 40px !important;
+  min-width: 40px !important;
+  height: 40px !important;
 }
 
 .profile-information {
@@ -141,83 +173,40 @@
 
 .profile-information .text h1 {
   color: #172b4d;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Noto Sans', 'Ubuntu', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Noto Sans", "Ubuntu", "Droid Sans", "Helvetica Neue", sans-serif;
   font-size: 14px;
   font-weight: 400;
 }
 
 .profile-information .text p {
   color: #b3bac5;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Noto Sans', 'Ubuntu', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Noto Sans", "Ubuntu", "Droid Sans", "Helvetica Neue", sans-serif;
   font-weight: 400;
   font-size: 9pt;
   margin-bottom: 0;
 }
 
-.profile-dropdown>button {
+.profile-dropdown > button {
   justify-content: flex-start;
-  padding: 6px 12px!important;
-  height: 32px!important;
+  padding: 6px 12px !important;
+  height: 32px !important;
 }
 
-.profile-dropdown>button:hover {
+.profile-dropdown > button:hover {
   background: rgba(9, 30, 66, 0.04);
 }
 
-.profile-dropdown>button>.v-btn__content {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Noto Sans', 'Ubuntu', 'Droid Sans', 'Helvetica Neue', sans-serif;
+.profile-dropdown > button > .v-btn__content {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Noto Sans", "Ubuntu", "Droid Sans", "Helvetica Neue", sans-serif;
   font-size: 14px;
   font-weight: 400;
-  color: #172b4d!important;
+  color: #172b4d !important;
   text-transform: none;
 
-  opacity: 1!important;
+  opacity: 1 !important;
 }
 </style>
 <!-- eslint-enable max-len -->
-
-<script>
-import Vue from 'vue';
-import firebase from 'firebase';
-
-import CloseIcon from 'vue-material-design-icons/Close.vue';
-
-Vue.directive('click-outside', {
-  bind(el, binding, vnode) {
-    // eslint-disable-next-line no-param-reassign
-    el.clickOutsideEvent = function (event) {
-      if (!(el === event.target || el.contains(event.target))) {
-        vnode.context[binding.expression](event);
-      }
-    };
-    document.body.addEventListener('click', el.clickOutsideEvent);
-  },
-  unbind(el) {
-    document.body.removeEventListener('click', el.clickOutsideEvent);
-  },
-});
-
-export default Vue.extend({
-  name: 'ProfileDropdown',
-
-  components: {
-    CloseIcon,
-  },
-
-  props: {
-    username: String,
-    email: String,
-  },
-
-  methods: {
-    logOut() {
-      firebase.auth().signOut().then(() => {
-        firebase.auth().onAuthStateChanged(() => {
-          this.$router.push('/home');
-          this.$emit('close');
-        });
-      });
-    },
-  },
-});
-</script>

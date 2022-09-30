@@ -1,43 +1,62 @@
+<script setup lang="ts">
+import { computed } from "vue";
+
+const props = defineProps<{
+  data: Object;
+}>();
+
+const classObj = computed(() => {
+  const classes = [];
+  classes.push(props.data.align);
+  if (props.data.image !== undefined) {
+    classes.push("has-image");
+  }
+  return classes;
+});
+</script>
+
 <template>
   <div class="extra-feature-item text-left" :class="classObj">
     <div class="extra-feature-item-text">
-      <p v-if="data.upperHeader" class="upperHeader">{{data.upperHeader}}</p>
+      <p v-if="data.upperHeader" class="upperHeader">{{ data.upperHeader }}</p>
       <h1>{{ data.header }}</h1>
-      <p class="description">{{data.description}}</p>
+      <p class="description">{{ data.description }}</p>
 
       <v-expansion-panels v-if="data.hideLearnMore !== true">
         <v-expansion-panel class="learnmore-container">
-          <v-expansion-panel-header expand-icon="" @click="$emit('onLearnMoreClick')">
+          <v-expansion-panel-header
+            expand-icon=""
+            @click="$emit('onLearnMoreClick')"
+          >
             <!-- eslint-disable max-len -->
-            <h1 class="learnmore">{{ data.isOpened === false ? '+' : '-' }}
-              Learn more</h1>
+            <h1 class="learnmore">
+              {{ data.isOpened === false ? "+" : "-" }} Learn more
+            </h1>
             <!-- eslint-enable max-len -->
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <p color="#091e42">{{data.learnMore.text}}</p>
-            <p color="#091e42" v-if="data.learnMore.text2">{{data.learnMore.text2}}</p>
+            <p color="#091e42">{{ data.learnMore.text }}</p>
+            <p color="#091e42" v-if="data.learnMore.text2">
+              {{ data.learnMore.text2 }}
+            </p>
 
             <ul>
-              <li v-for="(data, index) in data.learnMore.list" :key="index">{{data}}</li>
+              <li v-for="(data, index) in data.learnMore.list" :key="index">
+                {{ data }}
+              </li>
             </ul>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
-
-<!--      <div class="learnmore-container" :style="{-->
-<!--        'height': data.isOpened ? '100%' : '0px',-->
-<!--        'opacity': data.isOpened ? '1' : '0',-->
-<!--      }">-->
-<!--        <p color="#091e42">{{data.learnMore.text}}</p>-->
-<!--        <p color="#091e42" v-if="data.learnMore.text2">{{data.learnMore.text2}}</p>-->
-
-<!--        <ul>-->
-<!--          <li v-for="(data, index) in data.learnMore.list" :key="index">{{data}}</li>-->
-<!--        </ul>-->
-<!--      </div>-->
     </div>
-    <img :width="data.image.width" :height="data.image.height" v-if="data.image"
-         :src="data.image.url" alt="Extra feature image" class="extra-feature-item-image">
+    <img
+      :width="data.image.width"
+      :height="data.image.height"
+      v-if="data.image"
+      :src="data.image.url"
+      alt="Extra feature image"
+      class="extra-feature-item-image"
+    />
   </div>
 </template>
 
@@ -69,40 +88,40 @@
 }
 
 .extra-feature-item-text .upperHeader {
-  font-size: 1rem!important;
-  font-family: 'Charlie Text Semi Bold', sans-serif!important;
-  margin: 0!important;
+  font-size: 1rem !important;
+  font-family: "Charlie Text Semi Bold", sans-serif !important;
+  margin: 0 !important;
 }
 
 .extra-feature-item-text .description {
-  font-size: 20px!important;
+  font-size: 20px !important;
   color: rgb(94, 108, 132);
 }
 
 .extra-feature-item-text .learnmore .v-btn__content {
-  color: #091E42!important;
-  font-size: 24px!important;
-  font-family: 'Charlie Display Semi Bold', sans-serif!important;
+  color: #091e42 !important;
+  font-size: 24px !important;
+  font-family: "Charlie Display Semi Bold", sans-serif !important;
   margin: 0;
-  opacity: 1!important;
+  opacity: 1 !important;
   text-transform: none;
 }
 
 .learnmore {
-  font-family: 'Charlie Display', sans-serif!important;
-  font-size: 1.5rem!important;
-  margin: 0px!important;
+  font-family: "Charlie Display", sans-serif !important;
+  font-size: 1.5rem !important;
+  margin: 0px !important;
 }
 
 .v-expansion-panel-header,
 .learnmore-container,
 .learnmore {
-  padding: 0px!important;
+  padding: 0px !important;
 }
 
 .v-expansion-panel-header {
-  min-height: fit-content!important;
-  height: fit-content!important;
+  min-height: fit-content !important;
+  height: fit-content !important;
 }
 
 .v-expansion-panel-content__wrap {
@@ -117,34 +136,11 @@
 }
 
 .learnmore-container p {
-  font-size: 18px!important;
+  font-size: 18px !important;
 }
 
 .learnmore-container li {
-  font-family: 'Charlie Text', sans-serif;
+  font-family: "Charlie Text", sans-serif;
   font-size: 18px;
 }
 </style>
-
-<script>
-import Vue from 'vue';
-
-export default Vue.extend({
-  name: 'ExtraFeatureItem',
-
-  props: {
-    data: Object,
-  },
-
-  computed: {
-    classObj() {
-      const classes = [];
-      classes.push(this.data.align);
-      if (this.data.image !== undefined) {
-        classes.push('has-image');
-      }
-      return classes;
-    },
-  },
-});
-</script>

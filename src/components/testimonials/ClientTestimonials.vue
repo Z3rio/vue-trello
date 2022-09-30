@@ -1,3 +1,29 @@
+<script setup lang="ts">
+import { ref } from "vue";
+import ClientTestimonial from "./ClientTestimonial.vue";
+
+const currentTestimonial = ref(0);
+const props = defineProps<{
+  testimonials: Array;
+}>();
+
+function click_chevron(type) {
+  if (type === "+") {
+    if (currentTestimonial.value === props.testimonials.length - 1) {
+      currentTestimonial.value = 0;
+    } else {
+      currentTestimonial.value += 1;
+    }
+  } else if (type === "-") {
+    if (currentTestimonial.value === 0) {
+      currentTestimonial.value = props.testimonials.length - 1;
+    } else {
+      currentTestimonial.value -= 1;
+    }
+  }
+}
+</script>
+
 <template>
   <div class="testimonial-container">
     <div class="inner2">
@@ -5,24 +31,37 @@
         <div class="testimonial-buttons">
           <v-btn
             elevation="0"
-            fab tile :ripple="false"
-            color="#fff" small
+            fab
+            tile
+            :ripple="false"
+            color="#fff"
+            small
             @click="click_chevron('-')"
           >
-            <ChevronLeftIcon />
+            <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
           <v-btn
             elevation="0"
-            fab tile :ripple="false"
-            color="#fff" small
+            fab
+            tile
+            :ripple="false"
+            color="#fff"
+            small
             @click="click_chevron('+')"
           >
-            <ChevronRightIcon />
+            <v-icon>mdi-chevron-right</v-icon>
           </v-btn>
         </div>
 
-        <div class="testimonials" :style="{'margin-left': '-' + 100 * currentTestimonial + '%'}">
-          <ClientTestimonial v-for="(data,index) in testimonials" :key="index" :data="data" />
+        <div
+          class="testimonials"
+          :style="{ 'margin-left': '-' + 100 * currentTestimonial + '%' }"
+        >
+          <ClientTestimonial
+            v-for="(data, index) in testimonials"
+            :key="index"
+            :data="data"
+          />
         </div>
       </div>
     </div>
@@ -59,12 +98,12 @@
 }
 
 .testimonial-buttons button {
-  box-shadow: none!important;
-  border: 1px solid rgb(244, 245, 247)!important;
+  box-shadow: none !important;
+  border: 1px solid rgb(244, 245, 247) !important;
 }
 
 .testimonial-buttons button:hover {
-  border-color: rgb(223, 225, 230)!important;
+  border-color: rgb(223, 225, 230) !important;
 }
 
 .testimonial-buttons button:hover svg {
@@ -72,7 +111,7 @@
 }
 
 .testimonial-buttons button::before {
-  display: none!important;
+  display: none !important;
 }
 
 .testimonials {
@@ -85,46 +124,3 @@
   margin-top: 20px;
 }
 </style>
-
-<script>
-import Vue from 'vue';
-import ChevronRightIcon from 'vue-material-design-icons/ChevronRight.vue';
-import ChevronLeftIcon from 'vue-material-design-icons/ChevronLeft.vue';
-import ClientTestimonial from './ClientTestimonial.vue';
-
-export default Vue.extend({
-  name: 'ClientTestimonials',
-
-  components: {
-    ChevronRightIcon,
-    ChevronLeftIcon,
-    ClientTestimonial,
-  },
-
-  methods: {
-    click_chevron(type) {
-      if (type === '+') {
-        if (this.currentTestimonial === this.testimonials.length - 1) {
-          this.currentTestimonial = 0;
-        } else {
-          this.currentTestimonial += 1;
-        }
-      } else if (type === '-') {
-        if (this.currentTestimonial === 0) {
-          this.currentTestimonial = this.testimonials.length - 1;
-        } else {
-          this.currentTestimonial -= 1;
-        }
-      }
-    },
-  },
-
-  data: () => ({
-    currentTestimonial: 0,
-  }),
-
-  props: {
-    testimonials: Array,
-  },
-});
-</script>

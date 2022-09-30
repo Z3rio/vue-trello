@@ -1,25 +1,27 @@
-import firebase from 'firebase';
-import Vue from 'vue';
-import App from './App.vue';
-import router from './router';
-import vuetify from './plugins/vuetify';
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router";
+import firebase from "firebase";
+import vuetify from "./plugins/vuetify";
 
 const config = {
-  apiKey: process.env.VUE_APP_APIKEY,
-  authDomain: process.env.VUE_APP_AUTHDOMAIN,
-  projectId: process.env.VUE_APP_PROJECTID,
-  storageBucket: process.env.VUE_APP_STORAGEBUCKET,
-  messagingSenderId: process.env.VUE_APP_MESSAGINGSENDERID,
-  appId: process.env.VUE_APP_APPID,
-  measurementId: process.env.VUE_APP_MEASUREMENTID,
+  apiKey: import.meta.env.VUE_APP_APIKEY,
+  authDomain: import.meta.env.VUE_APP_AUTHDOMAIN,
+  projectId: import.meta.env.VUE_APP_PROJECTID,
+  storageBucket: import.meta.env.VUE_APP_STORAGEBUCKET,
+  messagingSenderId: import.meta.env.VUE_APP_MESSAGINGSENDERID,
+  appId: import.meta.env.VUE_APP_APPID,
+  measurementId: import.meta.env.VUE_APP_MEASUREMENTID,
 };
 
 firebase.initializeApp(config);
 
-Vue.config.productionTip = false;
+import "./assets/main.css";
 
-new Vue({
-  router,
-  vuetify,
-  render: (h) => h(App),
-}).$mount('#app');
+const app = createApp(App);
+
+app.use(router);
+
+app.use(vuetify);
+
+app.mount("#app");

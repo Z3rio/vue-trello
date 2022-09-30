@@ -1,28 +1,20 @@
+<script setup lang="ts">
+import ExtraFeatureItem from "./ExtraFeatureItem.vue";
+
+const props = defineProps<{
+  features: Array;
+}>();
+</script>
+
 <template>
   <div class="extra-feature-list">
     <ExtraFeatureItem
-      v-for="(feature, index) in features" :key="index" :data="feature"
-      @onLearnMoreClick="$emit('onLearnMoreClick', index)"/>
+      v-for="(feature, index) in features"
+      :key="index"
+      :data="feature"
+      @onLearnMoreClick="$emit('onLearnMoreClick', index)"
+    />
   </div>
 </template>
 
-<style>
-
-</style>
-
-<script>
-import Vue from 'vue';
-import ExtraFeatureItem from './ExtraFeatureItem.vue';
-
-export default Vue.extend({
-  name: 'ExtraFeatureList',
-
-  components: {
-    ExtraFeatureItem,
-  },
-
-  props: {
-    features: Array,
-  },
-});
-</script>
+<style></style>

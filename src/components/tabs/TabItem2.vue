@@ -1,22 +1,34 @@
+<script setup lang="ts">
+const props = defineProps<{
+  data: Object;
+}>();
+</script>
+
 <template>
-  <div class="tab-item2"
-   :style="{background: data.background !== undefined ? data.background : 'transparent'}"
+  <div
+    class="tab-item2"
+    :style="{
+      background:
+        data.background !== undefined ? data.background : 'transparent',
+    }"
   >
-    <p class="tab-text2">{{data.label}}</p>
-    <ChevronDownIcon v-if="data.isDropdown" class="tab-icon" :size="20"/>
+    <p class="tab-text2">{{ data.label }}</p>
+    <v-icon v-if="data.isDropdown" class="tab-icon" :size="20"
+      >mdi-chevron-down</v-icon
+    >
   </div>
 </template>
 
 <!-- eslint-disable max-len -->
-<style>
+<style scoped>
 .tab-text2,
 .tab-icon {
   color: white;
-  margin-bottom: 0!important;
+  margin-bottom: 0 !important;
 }
 
 .tab-item2:hover {
-  background: rgba(255, 255, 255, 0.3)!important;
+  background: rgba(255, 255, 255, 0.3) !important;
 }
 
 .tab-item2 {
@@ -37,7 +49,8 @@
 
 .tab-text2 {
   font-size: 1rem;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Noto Sans', 'Ubuntu', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Noto Sans", "Ubuntu", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 .tab-icon {
@@ -45,18 +58,3 @@
 }
 </style>
 <!-- eslint-enable max-len -->
-
-<script>
-import Vue from 'vue';
-import ChevronDownIcon from 'vue-material-design-icons/ChevronDown.vue';
-
-export default Vue.extend({
-  name: 'TabItem2',
-  components: {
-    ChevronDownIcon,
-  },
-  props: {
-    data: Object,
-  },
-});
-</script>

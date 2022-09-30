@@ -1,20 +1,32 @@
+<script setup lang="ts">
+const props = defineProps<{
+  data: Object;
+}>();
+</script>
+
 <template>
   <div class="tab-item">
-    <p class="tab-text">{{data.label}}</p>
-    <ChevronDownIcon v-if="data.isDropdown" class="tab-icon" :size="20"/>
+    <p class="tab-text">{{ data.label }}</p>
+    <v-icon v-if="data.isDropdown" class="tab-icon" :size="20"
+      >mdi-chevron-down</v-icon
+    >
   </div>
 </template>
 
-<style>
+<style scoped>
 .app-bar-1 .tab-text,
 .app-bar-1 .tab-icon {
   color: rgb(23, 43, 77);
-  margin-bottom: 0!important;
+  margin-bottom: 0 !important;
 }
 
 .app-bar-1 .tab-item:hover .tab-text,
 .app-bar-1 .tab-item:hover .tab-icon {
   color: rgb(0, 101, 255);
+}
+
+.tab-item .v-icon {
+  margin: 0px;
 }
 
 .tab-item {
@@ -39,18 +51,3 @@
   margin-top: 7.5px;
 }
 </style>
-
-<script>
-import Vue from 'vue';
-import ChevronDownIcon from 'vue-material-design-icons/ChevronDown.vue';
-
-export default Vue.extend({
-  name: 'TabItem',
-  components: {
-    ChevronDownIcon,
-  },
-  props: {
-    data: Object,
-  },
-});
-</script>
