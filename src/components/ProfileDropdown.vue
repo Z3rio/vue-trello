@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import Vue from "vue";
 import firebase from "firebase";
-import router from "@/router";
 
-const emit = defineEmits(['close'])
+import { useRouter } from "vue-router";
+
+const emit = defineEmits(["close"]);
+
+const router = useRouter();
 
 const props = defineProps<{
   username: String;

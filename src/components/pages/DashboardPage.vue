@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import firebase from "firebase";
-import router from "@/router";
+import { useRouter } from "vue-router";
 
 import WorkspaceInfo from "../dashboard/WorkspaceInfo.vue";
 import PopularTemplates from "../dashboard/PopularTemplates.vue";
 import YourWorkspaces from "../dashboard/YourWorkspaces.vue";
+
+const router = useRouter();
 
 const user = ref({});
 const tab = ref("boards");

@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import firebase from "firebase";
-import router from "@/router";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const email = ref("");
 const password = ref("");
@@ -16,25 +18,41 @@ function validate(email) {
   );
 }
 
-async function signup() {
-  if (validate(email.value)) {
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email.value, password.value)
-      .then((res) => {
-        firebase.auth().signOut();
-        signupError.value = "";
-        res.user.updateProfile({
-            displayName: email.value.split("@")[0],
-          })
-          .then(() => {
-            router.push({ name: "login" })
-      });
-      })
-      .catch((err) => {
-        signupError.value = err.message;
-      });
+var isLoggedIn = false;
 
+onMounted(() => {
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      isLoggedIn = true;
+    } else {
+      isLoggedIn = false;
+    }
+  });
+});
+
+async function signup() {
+  if (isLoggedIn == false) {
+    if (validate(email.value)) {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(email.value, password.value)
+        .then((res) => {
+          firebase.auth().signOut();
+          signupError.value = "";
+          res.user
+            .updateProfile({
+              displayName: email.value.split("@")[0],
+            })
+            .then(() => {
+              router.push({ path: "/login" });
+            });
+        })
+        .catch((err) => {
+          signupError.value = err.message;
+        });
+    }
+  } else {
+    signupError.value = "You are already logged in.";
   }
 }
 </script>
@@ -307,7 +325,8 @@ async function signup() {
 
 .signup-form input {
   padding: 0.5em;
-  font-family: '-apple-system',BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+  font-family: "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   font-size: 14px;
   font-weight: 400;
 }
@@ -317,16 +336,16 @@ async function signup() {
 .signup-form .v-field,
 .signup-form .v-field__field,
 .signup-form input {
-  height: 40px!important;
-  min-height: 40px!important;
+  height: 40px !important;
+  min-height: 40px !important;
 }
 
 .signup-form .v-field__overlay {
-  background: #fff!important;
+  background: #fff !important;
 }
 
 .signup-form .v-field__outline {
-  display: none!important;
+  display: none !important;
 }
 </style>
 <!-- eslint-enable max-len -->

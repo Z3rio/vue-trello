@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import firebase from "firebase";
-import router from "@/router";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const email = ref("");
 const password = ref("");
@@ -16,17 +18,33 @@ function validate(email: any) {
   );
 }
 
+var isLoggedIn = false;
+
+onMounted(() => {
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      isLoggedIn = true;
+    } else {
+      isLoggedIn = false;
+    }
+  });
+});
+
 function login() {
-  if (validate(email.value) && password.value !== "") {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email.value, password.value)
-      .then((user) => {
-        router.push({ name: "dashboard" });
-      })
-      .catch((err) => {
-        loginError.value = err.message;
-      });
+  if (isLoggedIn == false) {
+    if (validate(email.value) && password.value !== "") {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email.value, password.value)
+        .then((user) => {
+          router.push({ name: "dashboard" });
+        })
+        .catch((err) => {
+          loginError.value = err.message;
+        });
+    }
+  } else {
+    loginError.value = "You are already loggged in.";
   }
 }
 </script>
@@ -291,7 +309,8 @@ function login() {
 
 .login-form input {
   padding: 0.5em;
-  font-family: '-apple-system',BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+  font-family: "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   font-size: 14px;
   font-weight: 400;
 }
@@ -301,16 +320,16 @@ function login() {
 .login-form .v-field,
 .login-form .v-field__field,
 .login-form input {
-  height: 40px!important;
-  min-height: 40px!important;
+  height: 40px !important;
+  min-height: 40px !important;
 }
 
 .login-form .v-field__overlay {
-  background: #fff!important;
+  background: #fff !important;
 }
 
 .login-form .v-field__outline {
-  display: none!important;
+  display: none !important;
 }
 </style>
 <!-- eslint-enable max-len -->

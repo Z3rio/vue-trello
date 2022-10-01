@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { RouterLink, RouterView } from "vue-router";
-import router from "@/router";
+import { RouterLink, RouterView, useRouter } from "vue-router";
 
 import firebase from "firebase";
 
@@ -12,6 +11,8 @@ import ProfileDropdown from "./components/ProfileDropdown.vue";
 
 import PageFooter from "./components/footers/PageFooter.vue";
 import PageFooter2 from "./components/footers/PageFooter2.vue";
+
+const router = useRouter();
 
 const displayName = ref("");
 const email = ref("");
@@ -66,18 +67,13 @@ const tabs2 = ref([
 ]);
 
 onMounted(() => {
-    firebase.auth().onAuthStateChanged((user) => {
+  firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       displayName.value = user.displayName;
       email.value = user.email;
 
       const path = router.currentRoute.value.name;
-      if (
-        path === "home" ||
-        path === "home2" ||
-        path === "login" ||
-        path === "signup"
-      ) {
+      if (path === "home" || path === "home2") {
         router.push({ name: "dashboard" });
       }
     }
@@ -112,10 +108,22 @@ onMounted(() => {
       <TabsList :tabs="tabs" />
 
       <div class="buttons">
-        <a href="http://localhost:5173/login">
+        <a
+          :href="
+            displayName !== ''
+              ? 'http://localhost:5173/dashboard'
+              : 'http://localhost:5173/login'
+          "
+        >
           <v-btn class="login_button" elevation="0" color="#fff">Log In</v-btn>
         </a>
-        <a href="http://localhost:5173/signup">
+        <a
+          :href="
+            displayName !== ''
+              ? 'http://localhost:5173/dashboard'
+              : 'http://localhost:5173/signup'
+          "
+        >
           <v-btn color="#fff" elevation="0" class="signup_button"
             >Get Trello for free</v-btn
           >
@@ -169,7 +177,11 @@ onMounted(() => {
 
     <ProfileDropdown
       v-if="profileDropdown"
-      @close="profileDropdown = false; email = ''; displayName = '';"
+      @close="
+        profileDropdown = false;
+        email = '';
+        displayName = '';
+      "
       :username="displayName"
       :email="email"
     />
@@ -231,6 +243,11 @@ body {
   height: 15px;
 }
 
+.user .v-field__overlay {
+  border-radius: 4px !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
 .app-bar-1 .v-toolbar__content {
   padding: 0 0 0 1rem !important;
 }
@@ -239,16 +256,16 @@ body {
   padding: 6px 0px 6px 8px !important;
 }
 
-.app-bar-2>.v-toolbar__content>.v-icon {
+.app-bar-2 > .v-toolbar__content > .v-icon {
   color: #fff;
   border-radius: 3px;
 
-  height: 32px!important;
-  width: 32px!important;
+  height: 32px !important;
+  width: 32px !important;
   min-width: 32px;
 }
 
-.app-bar-2>.v-toolbar__content>.v-icon:hover {
+.app-bar-2 > .v-toolbar__content > .v-icon:hover {
   background-color: rgba(255, 255, 255, 0.2);
   cursor: pointer;
 }
@@ -264,8 +281,8 @@ body {
 
 .user .v-icon,
 .user input {
-  color: #fff;
-  opacity: 1!important;
+  color: #fff !important;
+  opacity: 1 !important;
 }
 
 .user .v-input,
@@ -280,14 +297,14 @@ body {
 .user .v-field,
 .user .v-field__field,
 .user input {
-  height: 30px!important;
-  min-height: 30px!important;
+  height: 30px !important;
+  min-height: 30px !important;
   width: 200px;
 }
 
 .user input,
 .user .v-field__field {
-  width: auto!important;
+  width: auto !important;
 }
 
 .user .v-field__outline {
@@ -302,7 +319,7 @@ body {
 
 .user .v-field__overlay {
   background: rgba(255, 255, 255, 0.2);
-  opacity: 1!important;
+  opacity: 1 !important;
 }
 
 .user,
