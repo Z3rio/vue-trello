@@ -1,6 +1,7 @@
-<script>
+<script setup lang="ts">
 import { ref } from "vue";
 import firebase from "firebase";
+import router from "@/router";
 
 const email = ref("");
 const password = ref("");
@@ -23,17 +24,17 @@ async function signup() {
       .then((res) => {
         firebase.auth().signOut();
         signupError.value = "";
-        res.user
-          .updateProfile({
+        res.user.updateProfile({
             displayName: email.value.split("@")[0],
           })
           .then(() => {
-            this.$router.push("/login");
-          });
+            router.push({ name: "login" })
+      });
       })
       .catch((err) => {
         signupError.value = err.message;
       });
+
   }
 }
 </script>
@@ -53,14 +54,14 @@ async function signup() {
       <h1>Sign up for your account</h1>
 
       <v-text-field
-        label="Enter email"
+        placeholder="Enter email"
         type="email"
         outlined
         hide-details
         v-model="email"
       ></v-text-field>
       <v-text-field
-        label="Enter password"
+        placeholder="Enter password"
         type="password"
         outlined
         hide-details
@@ -115,7 +116,7 @@ async function signup() {
       </div>
 
       <div class="bottom-help">
-        <a href="http://localhost:8080/login"
+        <a href="http://localhost:5173/login"
           >Already have an account? Log in</a
         >
       </div>
@@ -153,6 +154,8 @@ async function signup() {
     Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   font-weight: 300;
   color: #5e6c84;
+
+  margin-bottom: 1vh;
 }
 
 .signup-form h1 {
@@ -165,39 +168,6 @@ async function signup() {
 
   margin-top: 10px;
   margin-bottom: 25px;
-}
-
-.signup-form .v-input {
-  margin: 0 0 1.2em;
-}
-
-.signup-form .v-input fieldset {
-  border-width: 2px;
-}
-
-.signup-form .v-input:not(.v-input--is-focused) fieldset {
-  border-color: #dfe1e6;
-}
-
-.signup-form .v-input.v-input--is-focused fieldset {
-  border-color: #4b9aff;
-}
-
-.signup-form .v-input__slot {
-  width: 100%;
-}
-
-.signup-form .v-input .v-label {
-  line-height: 15px;
-}
-
-.signup-form .v-input__control > .v-input__slot {
-  height: 50px !important;
-  min-height: 0px !important;
-}
-
-.signup-form .v-text-field--outlined > .v-input__control > .v-input__slot {
-  background: #fafbfc;
 }
 
 .signup-form button {
@@ -327,6 +297,36 @@ async function signup() {
   font-size: 14px;
   font-family: "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+.signup-form .v-input {
+  margin: 0 0 1.2em;
+  border: 2px solid #dfe1e6;
+  border-radius: 3px;
+}
+
+.signup-form input {
+  padding: 0.5em;
+  font-family: '-apple-system',BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.signup-form .v-input,
+.signup-form .v-input__control,
+.signup-form .v-field,
+.signup-form .v-field__field,
+.signup-form input {
+  height: 40px!important;
+  min-height: 40px!important;
+}
+
+.signup-form .v-field__overlay {
+  background: #fff!important;
+}
+
+.signup-form .v-field__outline {
+  display: none!important;
 }
 </style>
 <!-- eslint-enable max-len -->

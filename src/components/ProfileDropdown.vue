@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import Vue from "vue";
 import firebase from "firebase";
+import router from "@/router";
+
+const emit = defineEmits(['close'])
 
 const props = defineProps<{
   username: String;
@@ -28,8 +31,8 @@ function logOut() {
     .signOut()
     .then(() => {
       firebase.auth().onAuthStateChanged(() => {
-        this.$router.push("/home");
-        this.$emit("close");
+        router.push({ name: "home" });
+        emit("close");
       });
     });
 }
@@ -70,23 +73,23 @@ function logOut() {
         </div>
       </div>
 
-      <v-btn plain tile block>Add another account</v-btn>
+      <v-btn plain tile block elevation="0">Add another account</v-btn>
 
       <hr />
 
-      <v-btn plain tile block>Profile and visibility</v-btn>
-      <v-btn plain tile block>Activity</v-btn>
-      <v-btn plain tile block>Cards</v-btn>
-      <v-btn plain tile block>Settings</v-btn>
+      <v-btn plain tile block elevation="0">Profile and visibility</v-btn>
+      <v-btn plain tile block elevation="0">Activity</v-btn>
+      <v-btn plain tile block elevation="0">Cards</v-btn>
+      <v-btn plain tile block elevation="0">Settings</v-btn>
 
       <hr />
 
-      <v-btn plain tile block>Help</v-btn>
-      <v-btn plain tile block>Shortcuts</v-btn>
+      <v-btn plain tile block elevation="0">Help</v-btn>
+      <v-btn plain tile block elevation="0">Shortcuts</v-btn>
 
       <hr />
 
-      <v-btn plain tile block @click="logOut">Log out</v-btn>
+      <v-btn plain tile block elevation="0" @click="logOut">Log out</v-btn>
     </div>
   </div>
 </template>

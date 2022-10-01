@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import firebase from "firebase";
+import router from "@/router";
 
 import WorkspaceInfo from "../dashboard/WorkspaceInfo.vue";
 import PopularTemplates from "../dashboard/PopularTemplates.vue";
@@ -40,16 +41,14 @@ const workspaces = ref([
   },
 ]);
 
-const props = defineProps<{
-  data: Object;
-}>();
+const props = defineProps<{}>();
 
 onMounted(() => {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       user.value = user;
     } else {
-      this.$router.push("/home");
+      router.push({ name: "home" });
     }
   });
 });
@@ -60,7 +59,6 @@ onMounted(() => {
     <div class="left-container">
       <v-btn
         :class="{ active: tab == 'boards' }"
-        prepend-icon="mdi-clipboard-outline"
         elevation="0"
         v-ripple="false"
         text
@@ -70,7 +68,6 @@ onMounted(() => {
       >
       <v-btn
         :class="{ active: tab == 'templates' }"
-        prepend-icon="mdi-clipboard-outline"
         elevation="0"
         v-ripple="false"
         text
@@ -80,7 +77,6 @@ onMounted(() => {
       >
       <v-btn
         :class="{ active: tab == 'home' }"
-        prepend-icon="mdi-clipboard-outline"
         elevation="0"
         v-ripple="false"
         text

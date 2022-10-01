@@ -36,11 +36,16 @@ const props = defineProps<{
   align-items: center;
   flex-direction: row;
   flex-wrap: nowrap;
-
   column-gap: 5px;
+
+  height: 32px;
 
   padding: 0 12px;
   border-radius: 3px;
+}
+
+.tab-item2 i {
+  margin: 0px;
 }
 
 .tab-item2:hover {

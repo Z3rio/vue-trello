@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import firebase from "firebase";
+import router from "@/router";
 
 const email = ref("");
 const password = ref("");
@@ -9,7 +10,7 @@ const continued = ref(false);
 
 const loginError = ref("");
 
-function validate(email) {
+function validate(email: any) {
   return /^(([^<>()\\[\]\\.,;:\s@\\"]+(\.[^<>()\\[\]\\.,;:\s@\\"]+)*)|(\\".+\\"))@(([^<>()\\.,;\s@\\"]+\.{0,1})+([^<>()\\.,;:\s@\\"]{2,}|[\d\\.]+))$/.test(
     email
   );
@@ -21,7 +22,7 @@ function login() {
       .auth()
       .signInWithEmailAndPassword(email.value, password.value)
       .then((user) => {
-        this.$router.push("/dashboard");
+        router.push({ name: "dashboard" });
       })
       .catch((err) => {
         loginError.value = err.message;
@@ -45,14 +46,14 @@ function login() {
       <h1>Log in to Trello</h1>
 
       <v-text-field
-        label="Enter email"
+        placeholder="Enter email"
         type="email"
         outlined
         hide-details
         v-model="email"
       ></v-text-field>
       <v-text-field
-        label="Enter password"
+        placeholder="Enter password"
         type="password"
         outlined
         hide-details
@@ -102,7 +103,7 @@ function login() {
 
       <div class="bottom-help">
         <a>Can't log in?</a>
-        <a href="http://localhost:8080/signup">Sign up for an account</a>
+        <a href="http://localhost:5173/signup">Sign up for an account</a>
       </div>
     </div>
     <div class="bottom-help">
@@ -148,35 +149,6 @@ function login() {
   margin-bottom: 25px;
 }
 
-.login-form .v-input {
-  margin: 0 0 1.2em;
-}
-
-.login-form .v-input fieldset {
-  border-width: 2px;
-}
-
-.login-form .v-input:not(.v-input--is-focused) fieldset {
-  border-color: #dfe1e6;
-}
-
-.login-form .v-input.v-input--is-focused fieldset {
-  border-color: #4b9aff;
-}
-
-.login-form .v-input__slot {
-  width: 100%;
-}
-
-.login-form .v-input .v-label {
-  line-height: 15px;
-}
-
-.login-form .v-input__control > .v-input__slot {
-  height: 50px !important;
-  min-height: 0px !important;
-}
-
 .login-form > button:not(.v-btn--disabled) {
   background: #5aac44;
 }
@@ -192,10 +164,6 @@ function login() {
 .login-form > button.v-btn--disabled .v-btn__content {
   color: #8c8c8c;
   font-weight: bold !important;
-}
-
-.login-form .v-text-field--outlined > .v-input__control > .v-input__slot {
-  background: #fafbfc;
 }
 
 .login-form button {
@@ -313,6 +281,36 @@ function login() {
   font-size: 14px;
   font-family: "-apple-system", BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+.login-form .v-input {
+  margin: 0 0 1.2em;
+  border: 2px solid #dfe1e6;
+  border-radius: 3px;
+}
+
+.login-form input {
+  padding: 0.5em;
+  font-family: '-apple-system',BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.login-form .v-input,
+.login-form .v-input__control,
+.login-form .v-field,
+.login-form .v-field__field,
+.login-form input {
+  height: 40px!important;
+  min-height: 40px!important;
+}
+
+.login-form .v-field__overlay {
+  background: #fff!important;
+}
+
+.login-form .v-field__outline {
+  display: none!important;
 }
 </style>
 <!-- eslint-enable max-len -->

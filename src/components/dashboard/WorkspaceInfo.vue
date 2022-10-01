@@ -18,7 +18,7 @@ const opened = ref(false);
       plain
       block
     >
-      <div class="workspace-icon">
+      <div class="workspace-icon" v-if="data && data.name">
         {{ data.name.substring(0, 1).toUpperCase() }}
       </div>
       <h1 class="workspace-text">{{ data.name }}</h1>
@@ -119,7 +119,7 @@ const opened = ref(false);
 
 .workspace-item button {
   display: flex;
-  align-items: center;
+  justify-content: flex-start;
 
   border-radius: 4px;
 

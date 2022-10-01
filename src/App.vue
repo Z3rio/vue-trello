@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, Vue, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { RouterLink, RouterView } from "vue-router";
+import router from "@/router";
 
 import firebase from "firebase";
 
@@ -12,7 +13,8 @@ import ProfileDropdown from "./components/ProfileDropdown.vue";
 import PageFooter from "./components/footers/PageFooter.vue";
 import PageFooter2 from "./components/footers/PageFooter2.vue";
 
-const user = ref({});
+const displayName = ref("");
+const email = ref("");
 
 const profileDropdown = ref(false);
 
@@ -64,18 +66,19 @@ const tabs2 = ref([
 ]);
 
 onMounted(() => {
-  firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      this.user = user;
+      displayName.value = user.displayName;
+      email.value = user.email;
 
-      const path = this.$route.name;
+      const path = router.currentRoute.value.name;
       if (
         path === "home" ||
         path === "home2" ||
         path === "login" ||
         path === "signup"
       ) {
-        this.$router.push("/dashboard");
+        router.push({ name: "dashboard" });
       }
     }
   });
@@ -96,10 +99,9 @@ onMounted(() => {
       v-if="$route.meta.topnav === 1"
       class="app-bar-1"
     >
-      <!-- eslint-disable max-len -->
       <a
         class="d-flex align-center text-decoration-none"
-        href="http://localhost:8080"
+        href="http://localhost:5173"
         ref="Logo"
       >
         <img
@@ -107,14 +109,13 @@ onMounted(() => {
           alt="Logo"
         />
       </a>
-      <!-- eslint-enable max-len -->
       <TabsList :tabs="tabs" />
 
       <div class="buttons">
-        <a href="http://localhost:8080/login">
+        <a href="http://localhost:5173/login">
           <v-btn class="login_button" elevation="0" color="#fff">Log In</v-btn>
         </a>
-        <a href="http://localhost:8080/signup">
+        <a href="http://localhost:5173/signup">
           <v-btn color="#fff" elevation="0" class="signup_button"
             >Get Trello for free</v-btn
           >
@@ -129,11 +130,10 @@ onMounted(() => {
       v-if="$route.meta.topnav === 2"
       class="app-bar-2"
     >
-      <!-- eslint-disable max-len -->
-      <v-icon>mdi-dots-grid</v-icon>
+      <v-icon :size="20">mdi-dots-grid</v-icon>
       <a
-        class="d-flex align-center text-decoration-none"
-        href="http://localhost:8080"
+        class="d-flex align-center text-decoration-none top-logo"
+        href="http://localhost:5173"
         ref="Logo"
       >
         <img
@@ -141,7 +141,6 @@ onMounted(() => {
           alt="Logo"
         />
       </a>
-      <!-- eslint-enable max-len -->
       <TabsList2 :tabs="tabs2" />
 
       <div class="user">
@@ -151,7 +150,6 @@ onMounted(() => {
           hide-details
           flat
           prepend-inner-icon="mdi-magnify"
-          background-color="rgba(255, 255, 255, 0.2)"
         ></v-text-field>
 
         <v-icon>mdi-information-outline</v-icon>
@@ -159,21 +157,21 @@ onMounted(() => {
 
         <v-btn
           class="user-icon"
-          v-if="user && user.displayName"
+          v-if="displayName !== ''"
           @click="profileDropdown = !profileDropdown"
           plain
           v-ripple="false"
         >
-          {{ user.displayName.substring(0, 1).toUpperCase() }}
+          {{ displayName.substring(0, 1).toUpperCase() }}
         </v-btn>
       </div>
     </v-app-bar>
 
     <ProfileDropdown
       v-if="profileDropdown"
-      @close="profileDropdown = false"
-      :username="user.displayName"
-      :email="user.email"
+      @close="profileDropdown = false; email = ''; displayName = '';"
+      :username="displayName"
+      :email="email"
     />
     <v-main>
       <RouterView />
@@ -241,6 +239,20 @@ body {
   padding: 6px 0px 6px 8px !important;
 }
 
+.app-bar-2>.v-toolbar__content>.v-icon {
+  color: #fff;
+  border-radius: 3px;
+
+  height: 32px!important;
+  width: 32px!important;
+  min-width: 32px;
+}
+
+.app-bar-2>.v-toolbar__content>.v-icon:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
 .buttons {
   height: 100%;
   display: flex;
@@ -250,11 +262,47 @@ body {
   margin-left: auto;
 }
 
+.user .v-icon,
+.user input {
+  color: #fff;
+  opacity: 1!important;
+}
+
 .user .v-input,
-.user .bell-outline-icon,
-.user .user-icon {
+.user .mdi-bell-outline,
+.user .mdi-information-outline {
   margin-right: 4px;
   margin-left: 4px;
+}
+
+.user .v-input,
+.user .v-input__control,
+.user .v-field,
+.user .v-field__field,
+.user input {
+  height: 30px!important;
+  min-height: 30px!important;
+  width: 200px;
+}
+
+.user input,
+.user .v-field__field {
+  width: auto!important;
+}
+
+.user .v-field__outline {
+  display: none;
+}
+
+.user .v-field__prepend-inner {
+  padding: 0px;
+  height: 100%;
+  align-items: center;
+}
+
+.user .v-field__overlay {
+  background: rgba(255, 255, 255, 0.2);
+  opacity: 1!important;
 }
 
 .user,
@@ -334,11 +382,6 @@ body {
   flex-wrap: nowrap;
 }
 
-.app-bar-2 .dots-grid-icon {
-  height: 24px;
-  padding-right: 8px;
-}
-
 .app-bar-2,
 .app-bar-2 .v-toolbar__content {
   height: 44px !important;
@@ -349,5 +392,16 @@ body {
   min-height: 32px;
   max-width: 100%;
   width: 200px;
+}
+
+.app-bar-2 .top-logo {
+  border-radius: 3px;
+  height: 32px;
+  padding: 0 6px;
+}
+
+.app-bar-2 .top-logo:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
 }
 </style>

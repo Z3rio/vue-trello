@@ -5,13 +5,13 @@ import firebase from "firebase";
 import vuetify from "./plugins/vuetify";
 
 const config = {
-  apiKey: import.meta.env.VUE_APP_APIKEY,
-  authDomain: import.meta.env.VUE_APP_AUTHDOMAIN,
-  projectId: import.meta.env.VUE_APP_PROJECTID,
-  storageBucket: import.meta.env.VUE_APP_STORAGEBUCKET,
-  messagingSenderId: import.meta.env.VUE_APP_MESSAGINGSENDERID,
-  appId: import.meta.env.VUE_APP_APPID,
-  measurementId: import.meta.env.VUE_APP_MEASUREMENTID,
+  apiKey: import.meta.env.VITE_APP_APIKEY,
+  authDomain: import.meta.env.VITE_APP_AUTHDOMAIN,
+  projectId: import.meta.env.VITE_APP_PROJECTID,
+  storageBucket: import.meta.env.VITE_APP_STORAGEBUCKET,
+  messagingSenderId: import.meta.env.VITE_APP_MESSAGINGSENDERID,
+  appId: import.meta.env.VITE_APP_APPID,
+  measurementId: import.meta.env.VITE_APP_MEASUREMENTID,
 };
 
 firebase.initializeApp(config);

@@ -220,10 +220,10 @@ const testimonials = ref([
             </v-col>
             <v-col cols="6" md="4">
               <v-btn
-                elevation="2"
+                elevation="0"
                 color="#0065ff"
                 class="blue-button home-btn"
-                href="http://localhost:8080/signup"
+                href="http://localhost:5173/signup"
                 >Sign up - it’s free
               </v-btn>
             </v-col>
@@ -309,9 +309,9 @@ const testimonials = ref([
           solo
           hide-details
           flat
-          background-color="#fff"
+          color="#fff"
         ></v-text-field>
-        <v-btn elevation="2" color="#fff" class="grey-button thick"
+        <v-btn elevation="0" color="#fff" class="grey-button thick"
           >Sign up</v-btn
         >
       </div>
@@ -359,6 +359,13 @@ hr {
 .inner2.second-section {
   padding: 3rem 1rem 1rem;
   margin: 0 auto;
+}
+
+.bottom input {
+  background: #fff!important;
+  color: black;
+
+  margin: 0!important;
 }
 
 .home-header {
@@ -410,7 +417,7 @@ hr {
 }
 
 button.thick {
-  height: 48px !important;
+  height: 50px !important;
 }
 
 .blue-button.home-btn {
@@ -501,15 +508,25 @@ button.thick {
   justify-content: center;
 }
 
-.inner2.third-section .v-input {
+.inner2.third-section input {
   margin-right: 1rem;
 }
-.v-input__slot {
+
+.bottom .v-input {
+  flex: 0 0 auto !important;
   width: 376px;
+  margin-right: 1.25vh;
+
+  border-radius: 0.3rem;
 }
 
-.v-input {
-  flex: 0 0 auto !important;
+.bottom .v-input,
+.bottom .v-input__control,
+.bottom .v-field,
+.bottom .v-field__field,
+.bottom input {
+  height: 50px!important;
+  min-height: 50px!important;
 }
 
 .app-section {
@@ -556,28 +573,28 @@ button.thick {
 @media (min-width: 576px) {
   .inner,
   .inner2 {
-    max-width: 540px;
+    max-width: 540px!important;
   }
 }
 
 @media (min-width: 768px) {
   .inner,
   .inner2 {
-    max-width: 720px;
+    max-width: 720px!important;
   }
 }
 
 @media (min-width: 992px) {
   .inner,
   .inner2 {
-    max-width: 960px;
+    max-width: 960px!important;
   }
 }
 
 @media (min-width: 1200px) {
   .inner,
   .inner2 {
-    max-width: 1140px;
+    max-width: 1140px!important;
   }
 }
 </style>

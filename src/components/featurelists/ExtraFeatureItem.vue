@@ -24,17 +24,12 @@ const classObj = computed(() => {
 
       <v-expansion-panels v-if="data.hideLearnMore !== true">
         <v-expansion-panel class="learnmore-container">
-          <v-expansion-panel-header
-            expand-icon=""
-            @click="$emit('onLearnMoreClick')"
-          >
-            <!-- eslint-disable max-len -->
+          <v-expansion-panel-title @click="$emit('onLearnMoreClick')">
             <h1 class="learnmore">
               {{ data.isOpened === false ? "+" : "-" }} Learn more
             </h1>
-            <!-- eslint-enable max-len -->
-          </v-expansion-panel-header>
-          <v-expansion-panel-content>
+          </v-expansion-panel-title>
+          <v-expansion-panel-text>
             <p color="#091e42">{{ data.learnMore.text }}</p>
             <p color="#091e42" v-if="data.learnMore.text2">
               {{ data.learnMore.text2 }}
@@ -45,7 +40,7 @@ const classObj = computed(() => {
                 {{ data }}
               </li>
             </ul>
-          </v-expansion-panel-content>
+          </v-expansion-panel-text>
         </v-expansion-panel>
       </v-expansion-panels>
     </div>
@@ -113,19 +108,36 @@ const classObj = computed(() => {
   margin: 0px !important;
 }
 
-.v-expansion-panel-header,
+.v-expansion-panel-title,
 .learnmore-container,
 .learnmore {
   padding: 0px !important;
 }
 
-.v-expansion-panel-header {
+.v-expansion-panel-title {
   min-height: fit-content !important;
   height: fit-content !important;
 }
 
-.v-expansion-panel-content__wrap {
-  padding: 1rem 1.25rem;
+.v-expansion-panel-text {
+  margin-top: 1rem;
+  margin-left: 1.25rem;
+}
+
+.v-expansion-panel-text__wrapper {
+  padding: 0px !important;
+}
+
+.v-expansion-panel-text__wrapper ul {
+  padding-left: 2rem;
+}
+
+.v-expansion-panel-title__overlay {
+  background: transparent !important;
+}
+
+.v-expansion-panel-title__icon .v-icon {
+  display: none !important;
 }
 
 .learnmore-container {
@@ -133,6 +145,10 @@ const classObj = computed(() => {
   overflow: hidden;
   transition-property: height, opacity;
   transition: 300ms, 500ms;
+}
+
+.v-expansion-panel__shadow {
+  display: none !important;
 }
 
 .learnmore-container p {

@@ -59,7 +59,7 @@ const props = defineProps<{}>();
             </g>
           </g>
         </svg>
-        <a href="http://localhost:8080/login">Log in</a>
+        <a href="http://localhost:5173/login">Log in</a>
       </div>
       <div class="links">
         <div>

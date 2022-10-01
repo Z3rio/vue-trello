@@ -36,10 +36,10 @@ function click_chevron(type) {
             :ripple="false"
             color="#fff"
             small
+            icon="mdi-chevron-left"
+            height="40" width="40"
             @click="click_chevron('-')"
-          >
-            <v-icon>mdi-chevron-left</v-icon>
-          </v-btn>
+          ></v-btn>
           <v-btn
             elevation="0"
             fab
@@ -48,9 +48,9 @@ function click_chevron(type) {
             color="#fff"
             small
             @click="click_chevron('+')"
-          >
-            <v-icon>mdi-chevron-right</v-icon>
-          </v-btn>
+            height="40" width="40"
+            icon="mdi-chevron-right"
+          ></v-btn>
         </div>
 
         <div
@@ -81,6 +81,7 @@ function click_chevron(type) {
 
 .testimonial-container .inner2 {
   margin: 0 auto;
+  padding-bottom: 3rem;
 }
 
 .testimonial-container .inner2 .inner3 {
@@ -100,6 +101,10 @@ function click_chevron(type) {
 .testimonial-buttons button {
   box-shadow: none !important;
   border: 1px solid rgb(244, 245, 247) !important;
+}
+
+.testimonial-buttons .v-btn--icon {
+  border-radius: 0px!important;
 }
 
 .testimonial-buttons button:hover {
